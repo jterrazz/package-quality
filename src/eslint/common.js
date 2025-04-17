@@ -38,6 +38,7 @@ export default [
         rules: {
             ...perfectionist.configs['recommended-natural'].rules,
             'perfectionist/sort-imports': 'off',
+            'perfectionist/sort-named-imports': 'off',
         },
     },
 
