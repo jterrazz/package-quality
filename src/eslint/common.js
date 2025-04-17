@@ -1,10 +1,10 @@
 import js from '@eslint/js';
 import ts from 'typescript-eslint';
-import sonarjs from 'eslint-plugin-sonarjs';
 import unusedImports from 'eslint-plugin-unused-imports';
 import simpleImportSort from 'eslint-plugin-simple-import-sort';
 import sortKeysFix from 'eslint-plugin-sort-keys-fix';
 import fileExtensionInImportTs from 'eslint-plugin-file-extension-in-import-ts';
+import perfectionist from 'eslint-plugin-perfectionist';
 
 export default [
     // Ignore project folders
@@ -30,11 +30,14 @@ export default [
         },
     },
 
-    // Configuration for SonarJS
+    // Configuration for Perfectionist rules
     {
-        ...sonarjs.configs.recommended,
         plugins: {
-            sonarjs: sonarjs,
+            perfectionist,
+        },
+        rules: {
+            ...perfectionist.configs['recommended-natural'].rules,
+            'perfectionist/sort-imports': 'off',
         },
     },
 
