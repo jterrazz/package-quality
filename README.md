@@ -1,6 +1,6 @@
-# Package Quality
+# Code Standards
 
-This package provides ESLint and Prettier configurations for TypeScript projects, along with a convenient quality-check command to run all quality checks in parallel.
+This package provides ESLint and Prettier configurations for TypeScript projects, along with a convenient code-standards command to run all quality checks in parallel.
 
 ## Installation
 
@@ -35,7 +35,7 @@ export default prettierConfig;
 ```json
 {
   "scripts": {
-    "lint": "quality-check"
+    "lint": "code-standards"
   }
 }
 ```
