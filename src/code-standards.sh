@@ -36,9 +36,9 @@ print_output() {
         cat "$file"
     fi
     if [ $status -ne 0 ]; then
-        echo -e "${RED}✖ Failed with exit code $status${NC}"
+        echo -e "${RED}❌ Failed with exit code $status${NC}"
     else
-        echo -e "${GREEN}✓ Passed${NC}"
+        echo -e "${GREEN}✅ Passed${NC}"
     fi
 }
 
@@ -58,9 +58,9 @@ print_output "$tmp_dir/style.log" "Prettier Check" $style_status
 # Print final summary
 echo -e "\n=== Summary ==="
 if [ $type_status -eq 0 ] && [ $code_status -eq 0 ] && [ $style_status -eq 0 ]; then
-    echo -e "${GREEN}✓ All checks passed${NC}"
+    echo -e "${GREEN}✅ All checks passed${NC}"
     exit 0
 else
-    echo -e "${RED}✖ Some checks failed${NC}"
+    echo -e "${RED}❌ Some checks failed${NC}"
     exit 1
 fi 
