@@ -56,6 +56,20 @@ export default [
         },
     },
 
+    // Custom rules for TypeScript type imports
+    {
+        rules: {
+            '@typescript-eslint/consistent-type-imports': [
+                'error',
+                {
+                    disallowTypeAnnotations: true,
+                    fixStyle: 'inline-type-imports',
+                    prefer: 'type-imports',
+                },
+            ],
+        },
+    },
+
     // Custom rules for imports and variables
     {
         plugins: {

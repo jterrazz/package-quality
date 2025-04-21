@@ -1,7 +1,7 @@
 {
   "name": "@jterrazz/quality",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "main": "src/index.js",
   "bin": {
     "code-standards": "./src/code-standards.sh"
@@ -11,10 +11,12 @@
   ],
   "type": "module",
   "scripts": {
-    "code-standards": "bash ./src/code-standards.sh"
+    "lint": "prettier --check .",
+    "test": "echo 'No tests yet'",
+    "build": "echo 'No build yet'"
   },
   "dependencies": {
-    "@eslint/js": "^9.24.0",
+    "@eslint/js": "^9.25.1",
     "eslint": "9.24.0",
     "eslint-plugin-file-extension-in-import-ts": "^2.1.1",
     "eslint-plugin-perfectionist": "^4.11.0",

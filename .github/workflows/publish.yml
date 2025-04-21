@@ -1,34 +1,39 @@
-name: Publish Package
+name: Publish NPM Package
 
 on:
   release:
     types: [created]
 
 jobs:
+  verify:
+    uses: ./.github/workflows/base-verify.yml
+
   publish:
     name: Publish
+    needs: verify
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          fetch-depth: 0
-
-      - name: Setup Node.js environment
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          registry-url: 'https://registry.npmjs.org'
+          node-version: '22'
           cache: 'npm'
-
+          cache-dependency-path: package-lock.json
+          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
-        run: |
-          echo "📦 Installing dependencies..."
-          npm ci
-
-      - name: Publish to npm registry
-        run: |
-          echo "🚀 Publishing package to npm registry..."
-          npm publish --access public
+        run: npm ci
+      - name: Build package
+        run: npm run build
+      - name: Publish to npm
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+      - name: Verify published package
+        run: |
+          # Just verify the package was packed correctly
+          npm pack --dry-run
+          # Extract package details directly from package.json for verification
+          PACKAGE_NAME=$(node -p "require('./package.json').name")
+          PACKAGE_VERSION=$(node -p "require('./package.json').version")
+          echo "Verifying published package: $PACKAGE_NAME@$PACKAGE_VERSION"
+          npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version
