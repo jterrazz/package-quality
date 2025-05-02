@@ -19,26 +19,35 @@ trap cleanup EXIT
 
 printf "${CYAN_BG}${BRIGHT_WHITE} START ${NC} Running all quality checks in parallel...\n\n"
 
-# Run all linting commands in parallel and save their outputs
-tsc --noEmit > "$tmp_dir/type.log" 2>&1 &
-type_pid=$!
+# Function to run a command and capture its output
+run_check() {
+    local cmd=$1
+    local log_file=$2
+    local pid_file=$3
+    
+    # Run the command and capture both stdout and stderr
+    eval "$cmd" > "$log_file" 2>&1
+    echo $? > "$pid_file"
+}
 
-eslint . > "$tmp_dir/code.log" 2>&1 &
-code_pid=$!
-
-prettier . --check > "$tmp_dir/style.log" 2>&1 &
-style_pid=$!
+# Run all linting commands in parallel
+run_check "tsc --noEmit" "$tmp_dir/type.log" "$tmp_dir/type.pid" &
+run_check "eslint ." "$tmp_dir/code.log" "$tmp_dir/code.pid" &
+run_check "prettier . --check" "$tmp_dir/style.log" "$tmp_dir/style.pid" &
 
 # Function to print output with a header
 print_output() {
     local file=$1
     local header=$2
-    local status=$3
+    local status_file=$3
+    
+    local status=$(cat "$status_file")
     
     printf "\n${CYAN_BG}${BRIGHT_WHITE} RUN ${NC} %s\n\n" "$header"
-    if [ -s "$file" ]; then
-        cat "$file"
-    fi
+    
+    # Always show the output, even if it's empty
+    cat "$file"
+    
     if [ $status -ne 0 ]; then
         printf "${RED}✗ Failed with exit code %d${NC}\n" $status
     else
@@ -47,17 +56,17 @@ print_output() {
 }
 
 # Wait for all processes to complete
-wait $type_pid
-type_status=$?
-wait $code_pid
-code_status=$?
-wait $style_pid
-style_status=$?
+wait
 
 # Print outputs with headers
-print_output "$tmp_dir/type.log" "TypeScript Check" $type_status
-print_output "$tmp_dir/code.log" "ESLint Check" $code_status
-print_output "$tmp_dir/style.log" "Prettier Check" $style_status
+print_output "$tmp_dir/type.log" "TypeScript Check" "$tmp_dir/type.pid"
+print_output "$tmp_dir/code.log" "ESLint Check" "$tmp_dir/code.pid"
+print_output "$tmp_dir/style.log" "Prettier Check" "$tmp_dir/style.pid"
+
+# Get final status
+type_status=$(cat "$tmp_dir/type.pid")
+code_status=$(cat "$tmp_dir/code.pid")
+style_status=$(cat "$tmp_dir/style.pid")
 
 # Print final summary
 printf "\n${CYAN_BG}${BRIGHT_WHITE} END ${NC} Finalizing quality checks\n\n"
