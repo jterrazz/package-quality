@@ -20,13 +20,13 @@ trap cleanup EXIT
 printf "${CYAN_BG}${BRIGHT_WHITE} START ${NC} Running all quality checks in parallel...\n\n"
 
 # Run all linting commands in parallel and save their outputs
-(tsc --noEmit 2>&1) > "$tmp_dir/type.log" &
+tsc --noEmit > "$tmp_dir/type.log" 2>&1 &
 type_pid=$!
 
-(eslint . 2>&1) > "$tmp_dir/code.log" &
+eslint . > "$tmp_dir/code.log" 2>&1 &
 code_pid=$!
 
-(prettier . --check 2>&1) > "$tmp_dir/style.log" &
+prettier . --check > "$tmp_dir/style.log" 2>&1 &
 style_pid=$!
 
 # Function to print output with a header
@@ -36,12 +36,9 @@ print_output() {
     local status=$3
     
     printf "\n${CYAN_BG}${BRIGHT_WHITE} RUN ${NC} %s\n\n" "$header"
-    
-    # Always show the output, even if it's empty
-    if [ -f "$file" ]; then
+    if [ -s "$file" ]; then
         cat "$file"
     fi
-    
     if [ $status -ne 0 ]; then
         printf "${RED}✗ Failed with exit code %d${NC}\n" $status
     else
@@ -49,7 +46,7 @@ print_output() {
     fi
 }
 
-# Wait for all processes to complete and capture their exit codes
+# Wait for all processes to complete
 wait $type_pid
 type_status=$?
 wait $code_pid
