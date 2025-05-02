@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Exit on error
-set -e
-
 # Colors for output (using Vitest-like colors)
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -17,7 +14,7 @@ cleanup() {
 }
 trap cleanup EXIT
 
-printf "${CYAN_BG}${BRIGHT_WHITE} START ${NC} Running all quality checks in parallel...\n\n"
+printf "${CYAN_BG}${BRIGHT_WHITE} START ${NC} Running all quality checks in parallel\n"
 
 # Run all linting commands in parallel and save their outputs
 tsc --noEmit > "$tmp_dir/type.log" 2>&1 &
