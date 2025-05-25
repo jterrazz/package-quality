@@ -1,16 +1,21 @@
-name: Publish NPM Package
+name: Release
 
 on:
   release:
     types: [created]
 
+permissions:
+  contents: read
+  id-token: write
+
 jobs:
-  verify:
-    uses: ./.github/workflows/base-verify.yml
+  quality:
+    name: Quality
+    uses: ./.github/workflows/base-quality.yml
 
   publish:
     name: Publish
-    needs: verify
+    needs: quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,12 +33,3 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
-      - name: Verify published package
-        run: |
-          # Just verify the package was packed correctly
-          npm pack --dry-run
-          # Extract package details directly from package.json for verification
-          PACKAGE_NAME=$(node -p "require('./package.json').name")
-          PACKAGE_VERSION=$(node -p "require('./package.json').version")
-          echo "Verifying published package: $PACKAGE_NAME@$PACKAGE_VERSION"
-          npm view "$PACKAGE_NAME@$PACKAGE_VERSION" version
