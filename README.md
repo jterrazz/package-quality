@@ -1,6 +1,6 @@
-# Code Standards
+# Package Quality
 
-This package provides ESLint and Prettier configurations for TypeScript projects, along with a convenient code-standards command to run all quality checks in parallel.
+This package provides modular ESLint and Prettier configurations for TypeScript projects, with environment-specific optimizations for Node.js and Expo/React Native development.
 
 ## Installation
 
@@ -12,46 +12,79 @@ npm install @jterrazz/quality --save-dev
 
 ## Usage
 
-1. Create an ESLint configuration file (e.g., `eslint.config.js`) in your project root:
+### ESLint Configuration
+
+Choose the configuration that matches your environment:
+
+**For Node.js projects:**
 
 ```javascript
 // eslint.config.js
-import { eslintConfig } from '@jterrazz/quality';
+import { node } from '@jterrazz/quality';
 
-export default eslintConfig;
+export default node;
 ```
 
-2. Create a Prettier configuration file (e.g., `prettier.config.js`) in your project root:
+**For Expo/React Native projects:**
+
+```javascript
+// eslint.config.js
+import { expo } from '@jterrazz/quality';
+
+export default expo;
+```
+
+### Prettier Configuration
 
 ```javascript
 // prettier.config.js
-import { prettierConfig } from '@jterrazz/quality';
+import { prettier } from '@jterrazz/quality';
 
-export default prettierConfig;
+export default prettier;
 ```
 
-3. Add the following script to your `package.json`:
+## Features
+
+### Environment-Specific Configurations
+
+**Node.js Configuration:**
+
+- Requires explicit file extensions (`.js`) for imports
+- Optimized for Node.js globals and patterns
+- Uses `eslint-plugin-file-extension-in-import-ts` for extension mapping
+
+**Expo/React Native Configuration:**
+
+- No file extensions required for code files (`.js`, `.jsx`, `.ts`, `.tsx`)
+- Extensions required for media files (`.png`, `.svg`, `.mp4`, etc.)
+- Browser and Node.js globals included
+- Uses `eslint-plugin-n` for import validation
+
+### Shared Features
+
+- **TypeScript**: Strict type checking with consistent type imports
+- **Import Sorting**: Automated import organization with architectural grouping
+- **Code Quality**: Perfectionist plugin for consistent code style
+- **Performance**: Modular structure for fast ESLint processing
+
+## Scripts
+
+Add these scripts to your `package.json` for common development tasks:
 
 ```json
 {
   "scripts": {
-    "lint": "code-standards"
+    "lint": "j-quality"
   }
 }
 ```
 
-4. You can now run all quality checks in parallel using:
+## Configuration
 
-```bash
-npm run lint
-```
+The configurations are fully modular and include:
 
-This will run:
+- **Base configurations**: JavaScript, TypeScript, and ignore patterns
+- **Plugin configurations**: Import sorting, perfectionist, file extensions
+- **Environment-specific**: Tailored rules for Node.js vs Expo/React Native
 
-- TypeScript type checking (`tsc --noEmit`)
-- ESLint code quality checks (`eslint . --ext .ts,.tsx`)
-- Prettier style checks (`prettier . --check`)
-
-All checks run in parallel and provide a clear summary of the results.
-
-Happy linting! 🚀
+Happy coding! 🚀

@@ -1,4 +1,9 @@
-import eslintNodeConfig from './eslint/node.js';
-import prettierConfig from './prettier/index.js';
+import node from './eslint/node.js';
+import expo from './eslint/expo.js';
+import prettier from './prettier/index.js';
 
-export { eslintNodeConfig, prettierConfig };
+// Clean and simple exports
+export { node, expo, prettier };
+
+// Default export
+export default { node, expo, prettier };
