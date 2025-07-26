@@ -1,40 +1,60 @@
-import nPlugin from 'eslint-plugin-n';
+import { expo } from '@jterrazz/quality';
+
+// Custom rule to remove TS/JS extensions
+const removeTsExtensionsRule = {
+    create(context) {
+        const extensionsToRemove = /\.(js|jsx|ts|tsx)$/;
+
+        function checkNode(node) {
+            if (!node.source || !node.source.value) return;
+
+            const importPath = node.source.value;
+
+            // Check both relative imports (starting with . or ..) AND path alias imports (starting with @/)
+            if (!importPath.startsWith('.') && !importPath.startsWith('@/')) return;
+
+            if (extensionsToRemove.test(importPath)) {
+                context.report({
+                    fix(fixer) {
+                        const newPath = importPath.replace(extensionsToRemove, '');
+                        return fixer.replaceText(node.source, `'${newPath}'`);
+                    },
+                    message: `Remove "${importPath.match(extensionsToRemove)[0]}" extension from import`,
+                    node: node.source,
+                });
+            }
+        }
+
+        return {
+            ExportAllDeclaration: checkNode,
+            ExportNamedDeclaration: checkNode,
+            ImportDeclaration: checkNode,
+        };
+    },
+    meta: {
+        docs: {
+            category: 'Best Practices',
+            description: 'Remove .js, .jsx, .ts, .tsx extensions from imports',
+        },
+        fixable: 'code',
+        schema: [],
+        type: 'problem',
+    },
+};
 
 export default [
+    ...expo,
     {
         plugins: {
-            n: nPlugin,
-        },
-        rules: {
-            // Use n/file-extension-in-import for relative imports (./file.js)
-            'n/file-extension-in-import': [
-                'error',
-                'never',
-                {
-                    '.js': 'never',
-                    '.jsx': 'never',
-                    '.ts': 'never',
-                    '.tsx': 'never',
-                    '.json': 'always',
-                    '.jpg': 'always',
-                    '.png': 'always',
-                    '.svg': 'always',
-                    '.webp': 'always',
-                    '.gif': 'always',
-                    '.mp4': 'always',
-                    '.mp3': 'always',
-                    '.wav': 'always',
-                    '.ogg': 'always',
-                    '.webm': 'always',
-                },
-            ],
-        },
-        settings: {
-            'import/resolver': {
-                node: {
-                    extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
+            custom: {
+                rules: {
+                    'remove-ts-extensions': removeTsExtensionsRule,
                 },
             },
+        },
+        rules: {
+            // Use our custom rule to remove TS/JS extensions
+            'custom/remove-ts-extensions': 'error',
         },
     },
 ];
