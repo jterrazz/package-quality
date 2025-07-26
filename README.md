@@ -67,16 +67,28 @@ export default prettier;
 - **Code Quality**: Perfectionist plugin for consistent code style
 - **Performance**: Modular structure for fast ESLint processing
 
+## CLI Tools
+
+This package includes powerful CLI tools for running quality checks:
+
+```bash
+# Run all quality checks (TypeScript, ESLint, Prettier) in parallel
+npx quality
+
+# Automatically fix all fixable issues (ESLint --fix, Prettier --write)
+npx quality-fix
+```
+
 ## Scripts
 
 Add these scripts to your `package.json` for common development tasks:
 
 ```json
 {
-  "scripts": {
-    "lint": "j-quality"
+    "scripts": {
+    "quality": "quality",
+    "quality:fix": "quality-fix"
   }
-}
 ```
 
 ## Configuration

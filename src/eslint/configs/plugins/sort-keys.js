@@ -10,4 +10,4 @@ export default [
             'sort-keys-fix/sort-keys-fix': 'warn',
         },
     },
-]; 
+];

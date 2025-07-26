@@ -4,7 +4,8 @@
   "version": "3.0.0",
   "main": "src/index.js",
   "bin": {
-    "j-quality": "./src/quality.sh"
+    "quality": "./src/quality.sh",
+    "quality-fix": "./src/quality-fix.sh"
   },
   "files": [
     "src"

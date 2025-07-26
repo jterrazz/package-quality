@@ -13,4 +13,4 @@ export default [
             'perfectionist/sort-objects': 'off',
         },
     },
-]; 
+];
