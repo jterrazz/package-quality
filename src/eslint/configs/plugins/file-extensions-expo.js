@@ -15,7 +15,7 @@ export default [
                     '.jsx': 'never',
                     '.ts': 'never',
                     '.tsx': 'never',
-                    '.json': 'never',
+                    '.json': 'always',
                     '.jpg': 'always',
                     '.png': 'always',
                     '.svg': 'always',
