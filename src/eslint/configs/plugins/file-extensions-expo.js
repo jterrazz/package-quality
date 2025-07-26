@@ -1,5 +1,3 @@
-import { expo } from '@jterrazz/quality';
-
 // Custom rule to remove TS/JS extensions
 const removeTsExtensionsRule = {
     create(context) {
@@ -43,7 +41,6 @@ const removeTsExtensionsRule = {
 };
 
 export default [
-    ...expo,
     {
         plugins: {
             custom: {
