@@ -11,7 +11,7 @@ export default [
             'perfectionist/sort-imports': 'off',
             'perfectionist/sort-named-imports': 'off',
             'perfectionist/sort-objects': 'off',
-            'eslint-plugin-perfectionist/sort-exports': 'error',
+            'perfectionist/sort-exports': 'off',
         },
     },
 ];
