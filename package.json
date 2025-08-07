@@ -1,7 +1,7 @@
 {
   "name": "@jterrazz/quality",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "main": "src/index.js",
   "bin": {
     "quality": "./src/quality.sh",
