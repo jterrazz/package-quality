@@ -42,24 +42,24 @@ export default [
                     newlinesBetween: 1,
                     groups: [
                         'react',
-                        'value-external',
+                        ['value-external', 'type-external'],
                         { commentAbove: 'Configuration' },
-                        'configuration',
+                        ['configuration', 'configuration-type'],
                         { commentAbove: 'Application' },
-                        'application',
+                        ['application', 'application-type'],
                         { commentAbove: 'Domain' },
-                        'domain',
+                        ['domain', 'domain-type'],
                         { commentAbove: 'Ports' },
-                        'ports',
+                        ['ports', 'ports-type'],
                         { commentAbove: 'Adapters' },
-                        'adapters',
+                        ['adapters', 'adapters-type'],
                         { commentAbove: 'Infrastructure' },
-                        'infrastructure',
+                        ['infrastructure', 'infrastructure-type'],
                         { commentAbove: 'Utils' },
-                        'utils',
-                        'value-parent',
-                        'value-sibling',
-                        'value-index',
+                        ['utils', 'utils-type'],
+                        ['value-parent', 'type-parent'],
+                        ['value-sibling', 'type-sibling'],
+                        ['value-index', 'type-index'],
                         'style',
                     ],
                     customGroups: [
@@ -76,7 +76,25 @@ export default [
                             ],
                         },
                         {
+                            groupName: 'configuration-type',
+                            selector: 'type',
+                            elementNamePattern: [
+                                '^@configuration(/.*|$)',
+                                '/configuration(?!/?$)',
+                                '/configuration/?$',
+                            ],
+                        },
+                        {
                             groupName: 'application',
+                            elementNamePattern: [
+                                '^@application(/.*|$)',
+                                '/application(?!/?$)',
+                                '/application/?$',
+                            ],
+                        },
+                        {
+                            groupName: 'application-type',
+                            selector: 'type',
                             elementNamePattern: [
                                 '^@application(/.*|$)',
                                 '/application(?!/?$)',
@@ -88,11 +106,30 @@ export default [
                             elementNamePattern: ['^@domain(/.*|$)', '/domain(?!/?$)', '/domain/?$'],
                         },
                         {
+                            groupName: 'domain-type',
+                            selector: 'type',
+                            elementNamePattern: ['^@domain(/.*|$)', '/domain(?!/?$)', '/domain/?$'],
+                        },
+                        {
                             groupName: 'ports',
                             elementNamePattern: ['^@ports(/.*|$)', '/ports(?!/?$)', '/ports/?$'],
                         },
                         {
+                            groupName: 'ports-type',
+                            selector: 'type',
+                            elementNamePattern: ['^@ports(/.*|$)', '/ports(?!/?$)', '/ports/?$'],
+                        },
+                        {
                             groupName: 'adapters',
+                            elementNamePattern: [
+                                '^@adapters(/.*|$)',
+                                '/adapters(?!/?$)',
+                                '/adapters/?$',
+                            ],
+                        },
+                        {
+                            groupName: 'adapters-type',
+                            selector: 'type',
                             elementNamePattern: [
                                 '^@adapters(/.*|$)',
                                 '/adapters(?!/?$)',
@@ -108,7 +145,21 @@ export default [
                             ],
                         },
                         {
+                            groupName: 'infrastructure-type',
+                            selector: 'type',
+                            elementNamePattern: [
+                                '^@infrastructure(/.*|$)',
+                                '/infrastructure(?!/?$)',
+                                '/infrastructure/?$',
+                            ],
+                        },
+                        {
                             groupName: 'utils',
+                            elementNamePattern: ['^@utils(/.*|$)', '/utils(?!/?$)', '/utils/?$'],
+                        },
+                        {
+                            groupName: 'utils-type',
+                            selector: 'type',
                             elementNamePattern: ['^@utils(/.*|$)', '/utils(?!/?$)', '/utils/?$'],
                         },
                         {
