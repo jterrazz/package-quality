@@ -1,7 +1,7 @@
 {
   "name": "@jterrazz/quality",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
-  "version": "3.0.5",
+  "version": "3.1.0",
   "main": "src/index.js",
   "bin": {
     "quality": "./src/quality.sh",
@@ -17,18 +17,15 @@
     "build": "# no build script"
   },
   "dependencies": {
-    "@eslint/js": "^9.32.0",
-    "eslint": "9.32.0",
+    "@eslint/js": "^9.33.0",
+    "eslint": "9.33.0",
     "eslint-plugin-file-extension-in-import-ts": "^2.1.1",
-    "eslint-plugin-import": "^2.32.0",
     "eslint-plugin-perfectionist": "^4.15.0",
-    "eslint-plugin-simple-import-sort": "^12.1.1",
-    "eslint-plugin-sort-keys-fix": "^1.1.2",
     "eslint-plugin-unused-imports": "^4.1.4",
     "globals": "^16.3.0",
     "prettier": "^3.6.2",
-    "typescript": "^5.8.3",
-    "typescript-eslint": "^8.38.0"
+    "typescript": "^5.9.2",
+    "typescript-eslint": "^8.39.1"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
