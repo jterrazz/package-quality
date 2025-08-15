@@ -23,16 +23,16 @@ export default [
             ],
 
             // Sorting
-            'perfectionist/sort-array-includes': 'natural',
-            'perfectionist/sort-classes': 'natural',
-            'perfectionist/sort-heritage-clauses': 'natural',
-            'perfectionist/sort-intersection-types': 'natural',
-            'perfectionist/sort-jsx-props': 'natural',
-            'perfectionist/sort-named-exports': 'natural',
-            'perfectionist/sort-named-imports': 'natural',
-            'perfectionist/sort-switch-case': 'natural',
-            'perfectionist/sort-union-types': 'natural',
-            'perfectionist/sort-variable-declarations': 'natural',
+            'perfectionist/sort-array-includes': ['error', { type: 'natural' }],
+            'perfectionist/sort-classes': ['error', { type: 'natural' }],
+            'perfectionist/sort-heritage-clauses': ['error', { type: 'natural' }],
+            'perfectionist/sort-intersection-types': ['error', { type: 'natural' }],
+            'perfectionist/sort-jsx-props': ['error', { type: 'natural' }],
+            'perfectionist/sort-named-exports': ['error', { type: 'natural' }],
+            'perfectionist/sort-named-imports': ['error', { type: 'natural' }],
+            'perfectionist/sort-switch-case': ['error', { type: 'natural' }],
+            'perfectionist/sort-union-types': ['error', { type: 'natural' }],
+            'perfectionist/sort-variable-declarations': ['error', { type: 'natural' }],
             'perfectionist/sort-imports': [
                 'error',
                 {
