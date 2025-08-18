@@ -1,6 +1,6 @@
 # Package Quality
 
-This package provides modular ESLint and Prettier configurations for TypeScript projects, with environment-specific optimizations for Node.js and Expo/React Native development.
+Unified lint/format rules to standardize TypeScript codebases.
 
 ## Installation
 
