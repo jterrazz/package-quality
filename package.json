@@ -1,22 +1,20 @@
 {
   "name": "@jterrazz/quality",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
-  "version": "4.0.2",
+  "version": "4.0.3",
   "main": "src/index.js",
   "bin": {
     "quality": "./src/quality.sh",
     "quality-fix": "./src/quality-fix.sh"
   },
-  "files": [
-    "src"
-  ],
+  "files": ["src"],
   "exports": {
     ".": "./src/index.js",
     "./biome": "./src/biome/index.json"
   },
   "type": "module",
   "scripts": {
-    "lint": "echo 'No local biome config - use in consumer projects'",
+    "lint": "biome check --write",
     "test": "# no test script",
     "build": "# no build script"
   },

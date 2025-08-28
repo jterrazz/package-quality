@@ -1,5 +1,5 @@
-import unusedImports from 'eslint-plugin-unused-imports';
 import perfectionist from 'eslint-plugin-perfectionist';
+import unusedImports from 'eslint-plugin-unused-imports';
 
 export default [
     // Configuration for Perfectionist rules

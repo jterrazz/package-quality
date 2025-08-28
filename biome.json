@@ -12,9 +12,6 @@
     "lineWidth": 100,
     "lineEnding": "lf"
   },
-  "organizeImports": {
-    "enabled": false
-  },
   "linter": {
     "enabled": true,
     "rules": {
