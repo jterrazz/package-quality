@@ -23,7 +23,7 @@ type_pid=$!
 eslint . --fix > "$tmp_dir/code.log" 2>&1 &
 code_pid=$!
 
-prettier . --write > "$tmp_dir/style.log" 2>&1 &
+biome format --write . > "$tmp_dir/style.log" 2>&1 &
 style_pid=$!
 
 # Function to print output with a header
@@ -54,7 +54,7 @@ style_status=$?
 # Print outputs with headers
 print_output "$tmp_dir/type.log" "TypeScript Check" $type_status
 print_output "$tmp_dir/code.log" "ESLint Fix" $code_status
-print_output "$tmp_dir/style.log" "Prettier Fix" $style_status
+print_output "$tmp_dir/style.log" "Biome Format" $style_status
 
 # Print final summary
 printf "\n${CYAN_BG}${BRIGHT_WHITE} END ${NC} Finalizing quality fixes\n\n"

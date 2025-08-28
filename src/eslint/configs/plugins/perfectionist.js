@@ -9,18 +9,10 @@ export default [
             'unused-imports': unusedImports,
         },
         rules: {
-            // Imports and variables
+            // Imports and variables - désactivé car géré par Biome
             '@typescript-eslint/no-unused-vars': 'off',
-            'unused-imports/no-unused-imports': 'error',
-            'unused-imports/no-unused-vars': [
-                'warn',
-                {
-                    vars: 'all',
-                    varsIgnorePattern: '^_',
-                    args: 'after-used',
-                    argsIgnorePattern: '^_',
-                },
-            ],
+            'unused-imports/no-unused-imports': 'off',
+            'unused-imports/no-unused-vars': 'off',
 
             // Sorting
             'perfectionist/sort-array-includes': ['error', { type: 'natural' }],
