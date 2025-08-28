@@ -39,7 +39,7 @@
   },
   "overrides": [
     {
-      "includes": ["*.md", "*.yaml", "*.yml"],
+      "include": ["*.md", "*.yaml", "*.yml"],
       "formatter": {
         "indentWidth": 2
       }
