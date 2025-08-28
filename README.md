@@ -1,6 +1,6 @@
 # Package Quality
 
-Unified lint/format rules to standardize TypeScript codebases.
+Unified lint/format rules to standardize TypeScript codebases with ESLint + Biome.
 
 ## Installation
 
@@ -34,13 +34,13 @@ import { expo } from '@jterrazz/quality';
 export default expo;
 ```
 
-### Prettier Configuration
+### Biome Configuration
 
-```javascript
-// prettier.config.js
-import { prettier } from '@jterrazz/quality';
-
-export default prettier;
+```json
+// biome.json
+{
+  "extends": ["@jterrazz/quality/biome"]
+}
 ```
 
 ## Features
@@ -65,6 +65,7 @@ export default prettier;
 - **TypeScript**: Strict type checking with consistent type imports
 - **Import Sorting**: Automated import organization with architectural grouping
 - **Code Quality**: Perfectionist plugin for consistent code style
+- **Fast Formatting**: Biome formatting ~10x faster than Prettier
 - **Performance**: Modular structure for fast ESLint processing
 
 ## CLI Tools
@@ -72,10 +73,10 @@ export default prettier;
 This package includes powerful CLI tools for running quality checks:
 
 ```bash
-# Run all quality checks (TypeScript, ESLint, Prettier) in parallel
+# Run all quality checks (TypeScript, ESLint, Biome) in parallel
 npx quality
 
-# Automatically fix all fixable issues (ESLint --fix, Prettier --write)
+# Automatically fix all fixable issues (ESLint --fix, Biome format --write)
 npx quality-fix
 ```
 
