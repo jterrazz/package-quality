@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.3.8/schema.json",
   "vcs": {
     "enabled": true,
     "clientKind": "git",
@@ -11,9 +11,6 @@
     "indentWidth": 4,
     "lineWidth": 100,
     "lineEnding": "lf"
-  },
-  "organizeImports": {
-    "enabled": false
   },
   "linter": {
     "enabled": true,
@@ -45,7 +42,7 @@
   },
   "overrides": [
     {
-      "include": ["*.md", "*.yaml", "*.yml"],
+      "includes": ["*.md", "*.yaml", "*.yml"],
       "formatter": {
         "indentWidth": 2
       }
