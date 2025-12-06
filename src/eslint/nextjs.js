@@ -7,6 +7,7 @@ import perfectionist from './configs/plugins/perfectionist.js';
 
 export default [
     ...ignores,
+    { ignores: ['.next/**', 'next-env.d.ts'] },
     ...javascript,
     ...typescript,
     ...perfectionist,
@@ -17,14 +18,6 @@ export default [
                 ...globals.browser,
                 ...globals.node,
             },
-        },
-        rules: {
-            '@typescript-eslint/no-require-imports': [
-                'error',
-                {
-                    allow: ['\\.png$', '\\.jpg$', '\\.jpeg$', '\\.gif$', '\\.webp$'],
-                },
-            ],
         },
     },
 ];

@@ -34,6 +34,15 @@ import { expo } from '@jterrazz/quality';
 export default expo;
 ```
 
+**For Next.js projects:**
+
+```javascript
+// eslint.config.js
+import { nextjs } from '@jterrazz/quality';
+
+export default nextjs;
+```
+
 ### Biome Configuration
 
 ```json
@@ -55,10 +64,14 @@ export default expo;
 
 **Expo/React Native Configuration:**
 
-- No file extensions required for code files (`.js`, `.jsx`, `.ts`, `.tsx`)
-- Extensions required for media files (`.png`, `.svg`, `.mp4`, etc.)
+- No file extensions in imports (auto-fixed)
+- Allows `require()` for image assets (`.png`, `.jpg`, etc.)
 - Browser and Node.js globals included
-- Uses `eslint-plugin-n` for import validation
+
+**Next.js Configuration:**
+
+- No file extensions in imports (Turbopack compatibility, auto-fixed)
+- Browser and Node.js globals included
 
 ### Shared Features
 
@@ -98,6 +111,6 @@ The configurations are fully modular and include:
 
 - **Base configurations**: JavaScript, TypeScript, and ignore patterns
 - **Plugin configurations**: Import sorting, perfectionist, file extensions
-- **Environment-specific**: Tailored rules for Node.js vs Expo/React Native
+- **Environment-specific**: Tailored rules for Node.js, Expo/React Native, and Next.js
 
 Happy coding! 🚀

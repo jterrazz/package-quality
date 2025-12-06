@@ -1,8 +1,9 @@
 import expo from './eslint/expo.js';
+import nextjs from './eslint/nextjs.js';
 import node from './eslint/node.js';
 
 // Clean and simple exports
-export { node, expo };
+export { expo, nextjs, node };
 
 // Default export
-export default { node, expo };
+export default { expo, nextjs, node };
