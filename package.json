@@ -1,11 +1,11 @@
 {
   "name": "@jterrazz/quality",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "main": "src/index.js",
   "bin": {
-    "quality": "./src/quality.sh",
-    "quality-fix": "./src/quality-fix.sh"
+    "ts-check": "./src/ts-check.sh",
+    "ts-fix": "./src/ts-fix.sh"
   },
   "files": ["src"],
   "exports": {
@@ -14,7 +14,8 @@
   },
   "type": "module",
   "scripts": {
-    "lint": "biome check --write",
+    "lint": "biome check",
+    "lint:fix": "biome check --write",
     "test": "# no test script",
     "build": "# no build script"
   },

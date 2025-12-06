@@ -87,10 +87,10 @@ This package includes powerful CLI tools for running quality checks:
 
 ```bash
 # Run all quality checks (TypeScript, ESLint, Biome) in parallel
-npx quality
+npx ts-check
 
 # Automatically fix all fixable issues (ESLint --fix, Biome format --write)
-npx quality-fix
+npx ts-fix
 ```
 
 ## Scripts
@@ -100,8 +100,8 @@ Add these scripts to your `package.json` for common development tasks:
 ```json
 {
     "scripts": {
-    "quality": "quality",
-    "quality:fix": "quality-fix"
+    "check": "ts-check",
+    "fix": "ts-fix"
   }
 ```
 
