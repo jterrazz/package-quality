@@ -22,10 +22,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "lint": "oxlint -c src/oxlint/node.json",
-    "lint:fix": "oxlint -c src/oxlint/node.json --fix",
-    "format": "oxfmt --config src/oxfmt/index.json .",
-    "format:check": "oxfmt --config src/oxfmt/index.json --check .",
+    "lint": "oxlint -c src/oxlint/node.json src",
+    "lint:fix": "oxlint -c src/oxlint/node.json --fix src",
+    "format": "oxfmt --config src/oxfmt/index.json src",
+    "format:check": "oxfmt --config src/oxfmt/index.json --check src",
     "test": "vitest --run",
     "test:watch": "vitest",
     "build": "# no build script"
