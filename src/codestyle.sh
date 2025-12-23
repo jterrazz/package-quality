@@ -64,10 +64,17 @@ code_pid=""
 style_pid=""
 
 # Find the node_modules/.bin directory relative to this script
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Resolve symlinks to get the real script location
+SOURCE="${BASH_SOURCE[0]}"
+while [ -L "$SOURCE" ]; do
+    DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
+    SOURCE="$(readlink "$SOURCE")"
+    [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
+done
+SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
 # Find bin directory: installed package or development
-if [ -x "$SCRIPT_DIR/../../.bin/oxlint" ]; then
-    BIN_DIR="$SCRIPT_DIR/../../.bin"
+if [ -x "$SCRIPT_DIR/../../../.bin/oxlint" ]; then
+    BIN_DIR="$SCRIPT_DIR/../../../.bin"
 elif [ -x "$SCRIPT_DIR/../node_modules/.bin/oxlint" ]; then
     BIN_DIR="$SCRIPT_DIR/../node_modules/.bin"
 else
