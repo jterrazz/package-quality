@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
   "rules": {
-    "architecture-boundaries/architecture-boundaries": [
+    "codestyle/arch-hexagonal": [
       "error",
       {
         "rules": [
@@ -19,41 +19,27 @@
           },
           {
             "from": "/application/use-cases/",
-            "disallow": [
-              "/infrastructure/",
-              "/presentation/",
-              "/di/"
-            ],
+            "disallow": ["/infrastructure/", "/presentation/", "/di/"],
             "message": "Use cases can only depend on domain and ports"
           },
           {
             "from": "/application/ports/",
-            "disallow": [
-              "/infrastructure/",
-              "/presentation/",
-              "/di/"
-            ],
+            "disallow": ["/infrastructure/", "/presentation/", "/di/"],
             "message": "Ports are interfaces - cannot depend on implementations"
           },
           {
             "from": "/infrastructure/inbound/",
-            "disallow": [
-              "/infrastructure/outbound/"
-            ],
+            "disallow": ["/infrastructure/outbound/"],
             "message": "Inbound adapters should not import outbound adapters - use DI"
           },
           {
             "from": "/presentation/ui/(atoms|molecules)/",
-            "disallow": [
-              "/navigation/"
-            ],
+            "disallow": ["/navigation/"],
             "message": "Atoms and molecules must be pure - no navigation imports"
           },
           {
             "from": "/presentation/features/",
-            "disallow": [
-              "/presentation/features/(?!common)"
-            ],
+            "disallow": ["/presentation/features/(?!common)"],
             "message": "Features should be independent - use shared code in features/common"
           }
         ]

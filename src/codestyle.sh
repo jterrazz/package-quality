@@ -72,8 +72,6 @@ while [ -L "$SOURCE" ]; do
     [[ $SOURCE != /* ]] && SOURCE="$DIR/$SOURCE"
 done
 SCRIPT_DIR="$(cd -P "$(dirname "$SOURCE")" && pwd)"
-PACKAGE_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
-
 # Find bin directory: installed package or development
 if [ -x "$SCRIPT_DIR/../../../.bin/oxlint" ]; then
     BIN_DIR="$SCRIPT_DIR/../../../.bin"
@@ -83,89 +81,6 @@ else
     BIN_DIR="$(npm bin 2>/dev/null)"
 fi
 
-# Check if project uses any configs that need JS plugins and merge them
-OXLINT_EXTRA_ARGS=()
-if [ -f ".oxlintrc.json" ]; then
-    PLUGINS_DIR="$PACKAGE_DIR/src/oxlint/plugins"
-    CONFIGS_DIR="$PACKAGE_DIR/src/oxlint"
-    
-    if [ -d "$PLUGINS_DIR" ]; then
-        # Create a temporary config that merges all needed jsPlugins and rules
-        TEMP_CONFIG="$tmp_dir/oxlintrc.json"
-        node -e "
-            const fs = require('fs');
-            const path = require('path');
-            
-            const config = JSON.parse(fs.readFileSync('.oxlintrc.json', 'utf8'));
-            const pluginsDir = '$PLUGINS_DIR';
-            const configsDir = '$CONFIGS_DIR';
-            
-            // Initialize arrays/objects
-            config.jsPlugins = config.jsPlugins || [];
-            config.rules = config.rules || {};
-            
-            // Map of config patterns to their plugin files and config files
-            const pluginConfigs = [
-                {
-                    pattern: 'architectures/hexagonal',
-                    plugin: 'architecture-boundaries.js',
-                    configFile: 'architectures/hexagonal.json'
-                },
-                {
-                    pattern: 'oxlint/node',
-                    plugin: 'require-js-extensions.js',
-                    configFile: 'node.json'
-                },
-                {
-                    pattern: 'oxlint/expo',
-                    plugin: 'remove-ts-extensions.js',
-                    configFile: 'expo.json'
-                },
-                {
-                    pattern: 'oxlint/nextjs',
-                    plugin: 'remove-ts-extensions.js',
-                    configFile: 'nextjs.json'
-                }
-            ];
-            
-            const configStr = JSON.stringify(config);
-            const addedPlugins = new Set();
-            
-            for (const pc of pluginConfigs) {
-                if (configStr.includes(pc.pattern)) {
-                    const pluginPath = path.join(pluginsDir, pc.plugin);
-                    
-                    // Add plugin if not already added
-                    if (fs.existsSync(pluginPath) && !addedPlugins.has(pc.plugin)) {
-                        config.jsPlugins.push(pluginPath);
-                        addedPlugins.add(pc.plugin);
-                    }
-                    
-                    // Merge rules from config file
-                    const configPath = path.join(configsDir, pc.configFile);
-                    if (fs.existsSync(configPath)) {
-                        try {
-                            const extConfig = JSON.parse(fs.readFileSync(configPath, 'utf8'));
-                            if (extConfig.rules) {
-                                Object.assign(config.rules, extConfig.rules);
-                            }
-                        } catch (e) {}
-                    }
-                }
-            }
-            
-            // Only write temp config if we added plugins
-            if (config.jsPlugins.length > 0) {
-                fs.writeFileSync('$TEMP_CONFIG', JSON.stringify(config, null, 2));
-            }
-        " 2>/dev/null
-        
-        if [ -f "$TEMP_CONFIG" ]; then
-            OXLINT_EXTRA_ARGS+=("-c" "$TEMP_CONFIG")
-        fi
-    fi
-fi
-
 if [ "$RUN_TYPE" = true ]; then
     "$BIN_DIR/tsgo" --noEmit "${EXTRA_ARGS[@]}" > "$tmp_dir/type.log" 2>&1 &
     type_pid=$!
@@ -173,9 +88,9 @@ fi
 
 if [ "$RUN_LINT" = true ]; then
     if [ "$FIX_MODE" = true ]; then
-        "$BIN_DIR/oxlint" "${OXLINT_EXTRA_ARGS[@]}" --fix "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
+        "$BIN_DIR/oxlint" --fix "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
     else
-        "$BIN_DIR/oxlint" "${OXLINT_EXTRA_ARGS[@]}" "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
+        "$BIN_DIR/oxlint" "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
     fi
     code_pid=$!
 fi

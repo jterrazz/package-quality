@@ -1,6 +1,6 @@
 {
   "name": "@jterrazz/codestyle",
-  "version": "1.1.3",
+  "version": "1.2.0",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
   "bin": {
     "codestyle": "./src/codestyle.sh"
@@ -16,7 +16,7 @@
     "./oxlint/expo": "./src/oxlint/expo.json",
     "./oxlint/nextjs": "./src/oxlint/nextjs.json",
     "./oxlint/architectures/hexagonal": "./src/oxlint/architectures/hexagonal.json",
-    "./oxlint/plugins/*": "./src/oxlint/plugins/*",
+    "./oxlint/plugins/codestyle": "./src/oxlint/plugins/codestyle.js",
     "./oxfmt": "./src/oxfmt/index.json"
   },
   "publishConfig": {
@@ -27,7 +27,8 @@
     "lint:fix": "oxlint --fix --ignore-pattern '**/fixtures/**' && oxfmt",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "build": "# no build script"
+    "build": "# no build script",
+    "postinstall": "node src/postinstall.js"
   },
   "dependencies": {
     "@typescript/native-preview": "^7.0.0-dev",

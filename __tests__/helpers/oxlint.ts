@@ -1,19 +1,42 @@
 import { execSync } from "child_process";
+import { writeFileSync } from "fs";
 import { dirname, resolve } from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT_DIR = resolve(__dirname, "../..");
 const OXLINT_BIN = resolve(ROOT_DIR, "node_modules/.bin/oxlint");
+const CODESTYLE_PLUGIN = resolve(ROOT_DIR, "src/oxlint/plugins/codestyle.js");
 
 export type LintResult = {
   success: boolean;
   output: string;
 };
 
-export function runOxlint(configPath: string, cwd: string): LintResult {
+export type RunOxlintOptions = {
+  withCodestylePlugin?: boolean;
+};
+
+export function runOxlint(
+  configPath: string,
+  cwd: string,
+  options: RunOxlintOptions = {},
+): LintResult {
+  let actualConfig = configPath;
+
+  // If we need the codestyle plugin, create a wrapper config
+  if (options.withCodestylePlugin) {
+    const wrapperConfig = {
+      extends: [configPath],
+      jsPlugins: [CODESTYLE_PLUGIN],
+    };
+    const wrapperPath = resolve(cwd, ".oxlintrc.temp.json");
+    writeFileSync(wrapperPath, JSON.stringify(wrapperConfig));
+    actualConfig = wrapperPath;
+  }
+
   try {
-    const output = execSync(`${OXLINT_BIN} -c ${configPath} .`, {
+    const output = execSync(`${OXLINT_BIN} -c ${actualConfig} .`, {
       cwd,
       encoding: "utf8",
       stdio: ["pipe", "pipe", "pipe"],
@@ -28,10 +51,6 @@ export function runOxlint(configPath: string, cwd: string): LintResult {
 }
 
 export function hasErrorOnFile(output: string, file: string, rule: string): boolean {
-  // Format: "plugin(rule): message" then "╭─[filename:line:col]" or ",-[filename:line:col]"
-  // TTY mode uses box-drawing chars (╭─[), non-TTY uses ASCII (,-[)
-  // We need to find the file in an error block header, then verify the rule appears before it
-
   // Strip ANSI escape codes for reliable matching
   // eslint-disable-next-line no-control-regex
   const ansiRegex = /\x1b\[[0-9;]*m/g;

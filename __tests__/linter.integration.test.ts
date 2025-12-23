@@ -26,9 +26,9 @@ describe("linter integration", () => {
     const nextjsConfig = resolve(ROOT_DIR, "src/oxlint/nextjs.json");
 
     baseResult = runOxlint(baseConfig, tempDir);
-    nodeResult = runOxlint(nodeConfig, tempDir);
-    expoResult = runOxlint(expoConfig, tempDir);
-    nextjsResult = runOxlint(nextjsConfig, tempDir);
+    nodeResult = runOxlint(nodeConfig, tempDir, { withCodestylePlugin: true });
+    expoResult = runOxlint(expoConfig, tempDir, { withCodestylePlugin: true });
+    nextjsResult = runOxlint(nextjsConfig, tempDir, { withCodestylePlugin: true });
   });
 
   afterAll(() => {
@@ -159,11 +159,11 @@ describe("linter integration", () => {
 
   describe("node config", () => {
     it("should require .js extension on relative imports", () => {
-      expectError(nodeResult.output, "invalid-missing-js-ext.ts", "extensions");
+      expectError(nodeResult.output, "invalid-missing-js-ext.ts", "imports-with-ext");
     });
 
     it("should pass when .js extension is present", () => {
-      expectNoError(nodeResult.output, "valid-sorted.ts", "extensions");
+      expectNoError(nodeResult.output, "valid-sorted.ts", "imports-with-ext");
     });
 
     it("should inherit base rules (detect unused vars)", () => {
@@ -173,11 +173,11 @@ describe("linter integration", () => {
 
   describe("expo config", () => {
     it("should reject .ts extension on relative imports", () => {
-      expectError(expoResult.output, "invalid-has-ts-ext.ts", "extensions");
+      expectError(expoResult.output, "invalid-has-ts-ext.ts", "imports-without-ext");
     });
 
     it("should pass when no extension on relative imports", () => {
-      expectNoError(expoResult.output, "valid-sorted-no-ext.ts", "extensions");
+      expectNoError(expoResult.output, "valid-sorted-no-ext.ts", "imports-without-ext");
     });
 
     it("should inherit base rules (detect unsorted imports)", () => {
@@ -187,11 +187,11 @@ describe("linter integration", () => {
 
   describe("nextjs config", () => {
     it("should reject .ts extension on relative imports", () => {
-      expectError(nextjsResult.output, "invalid-has-ts-ext.ts", "extensions");
+      expectError(nextjsResult.output, "invalid-has-ts-ext.ts", "imports-without-ext");
     });
 
     it("should pass when no extension on relative imports", () => {
-      expectNoError(nextjsResult.output, "valid-sorted-no-ext.ts", "extensions");
+      expectNoError(nextjsResult.output, "valid-sorted-no-ext.ts", "imports-without-ext");
     });
 
     it("should inherit base rules (detect unused vars)", () => {

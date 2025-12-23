@@ -6,10 +6,10 @@
     "typescript/no-require-imports": [
       "error",
       {
-        "allow": ["\.png$", "\.jpg$", "\.jpeg$", "\.gif$", "\.webp$"]
+        "allow": ["\\.png$", "\\.jpg$", "\\.jpeg$", "\\.gif$", "\\.webp$"]
       }
     ],
-    "remove-ts-extensions/remove-ts-extensions": "error",
+    "codestyle/imports-without-ext": "error",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react/jsx-boolean-value": "off",

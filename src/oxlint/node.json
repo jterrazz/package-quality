@@ -1,9 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
-  "extends": [
-    "./base.json"
-  ],
+  "extends": ["./base.json"],
   "rules": {
-    "require-js-extensions/require-js-extensions": "error"
+    "codestyle/imports-with-ext": "error"
   }
 }
