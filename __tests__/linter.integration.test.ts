@@ -15,20 +15,13 @@ type LintResult = {
   warningCount: number;
 };
 
-function runLint(
-  configPath: string,
-  targetFile: string,
-  cwd: string,
-): LintResult {
+function runLint(configPath: string, targetFile: string, cwd: string): LintResult {
   try {
-    const output = execSync(
-      `${CODESTYLE_BIN} --lint -c ${configPath} ${targetFile}`,
-      {
-        cwd,
-        encoding: "utf-8",
-        stdio: ["pipe", "pipe", "pipe"],
-      },
-    );
+    const output = execSync(`${CODESTYLE_BIN} --lint -c ${configPath} ${targetFile}`, {
+      cwd,
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
+    });
     const match = output.match(/Found (\d+) warnings? and (\d+) errors?/);
     return {
       success: true,
@@ -88,11 +81,7 @@ describe("linter integration", () => {
 
     describe("typescript/no-unused-expressions", () => {
       it("should detect unused expressions", () => {
-        const result = runLint(
-          configPath,
-          "invalid-unused-expression.ts",
-          tempDir,
-        );
+        const result = runLint(configPath, "invalid-unused-expression.ts", tempDir);
         expect(result.success).toBe(false);
         expect(result.errorCount).toBeGreaterThan(0);
         expect(result.output).toContain("no-unused-expressions");
@@ -101,11 +90,7 @@ describe("linter integration", () => {
 
     describe("perfectionist/sort-imports", () => {
       it("should detect unsorted imports", () => {
-        const result = runLint(
-          configPath,
-          "invalid-unsorted-imports.ts",
-          tempDir,
-        );
+        const result = runLint(configPath, "invalid-unsorted-imports.ts", tempDir);
         expect(result.success).toBe(false);
         expect(result.errorCount).toBeGreaterThan(0);
         expect(result.output).toContain("perfectionist");
@@ -119,11 +104,7 @@ describe("linter integration", () => {
 
     describe("perfectionist/sort-union-types", () => {
       it("should detect unsorted union types", () => {
-        const result = runLint(
-          configPath,
-          "invalid-unsorted-union.ts",
-          tempDir,
-        );
+        const result = runLint(configPath, "invalid-unsorted-union.ts", tempDir);
         expect(result.success).toBe(false);
         expect(result.errorCount).toBeGreaterThan(0);
         expect(result.output).toContain("sort-union-types");
@@ -137,33 +118,21 @@ describe("linter integration", () => {
 
     describe("perfectionist/sort-named-exports", () => {
       it("should detect unsorted named exports", () => {
-        const result = runLint(
-          configPath,
-          "invalid-unsorted-named-exports.ts",
-          tempDir,
-        );
+        const result = runLint(configPath, "invalid-unsorted-named-exports.ts", tempDir);
         expect(result.success).toBe(false);
         expect(result.errorCount).toBeGreaterThan(0);
         expect(result.output).toContain("sort-named-exports");
       });
 
       it("should pass for sorted named exports", () => {
-        const result = runLint(
-          configPath,
-          "valid-sorted-named-exports.ts",
-          tempDir,
-        );
+        const result = runLint(configPath, "valid-sorted-named-exports.ts", tempDir);
         expect(result.errorCount).toBe(0);
       });
     });
 
     describe("perf category", () => {
       it("should warn about spread in reduce accumulator", () => {
-        const result = runLint(
-          configPath,
-          "invalid-perf-spread-in-accumulator.ts",
-          tempDir,
-        );
+        const result = runLint(configPath, "invalid-perf-spread-in-accumulator.ts", tempDir);
         expect(result.warningCount).toBeGreaterThan(0);
         expect(result.output).toContain("no-accumulating-spread");
       });
@@ -208,11 +177,7 @@ describe("linter integration", () => {
     });
 
     it("should inherit base rules (detect unsorted imports)", () => {
-      const result = runLint(
-        configPath,
-        "invalid-unsorted-imports.ts",
-        tempDir,
-      );
+      const result = runLint(configPath, "invalid-unsorted-imports.ts", tempDir);
       expect(result.success).toBe(false);
       expect(result.output).toContain("perfectionist");
     });

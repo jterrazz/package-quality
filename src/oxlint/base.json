@@ -19,6 +19,11 @@
     "import/no-named-export": "off",
     "import/no-anonymous-default-export": "off",
     "import/group-exports": "off",
+    "no-ternary": "off",
+    "init-declarations": "off",
+    "capitalized-comments": "off",
+    "id-length": "off",
+    "typescript/consistent-type-definitions": "off",
     "typescript/consistent-type-imports": [
       "error",
       {

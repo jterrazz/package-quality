@@ -18,14 +18,11 @@ type FormatResult = {
 function runFormatCheck(targetFile: string, targetDir: string): FormatResult {
   try {
     const filePath = resolve(targetDir, targetFile);
-    const output = execSync(
-      `${CODESTYLE_BIN} --format --config ${CONFIG_PATH} ${filePath}`,
-      {
-        cwd: ROOT_DIR,
-        encoding: "utf-8",
-        stdio: ["pipe", "pipe", "pipe"],
-      },
-    );
+    const output = execSync(`${CODESTYLE_BIN} --format --config ${CONFIG_PATH} ${filePath}`, {
+      cwd: ROOT_DIR,
+      encoding: "utf-8",
+      stdio: ["pipe", "pipe", "pipe"],
+    });
     return {
       success: true,
       output,
@@ -43,14 +40,11 @@ function runFormatCheck(targetFile: string, targetDir: string): FormatResult {
 
 function runFormat(targetFile: string, targetDir: string): string {
   const filePath = resolve(targetDir, targetFile);
-  execSync(
-    `${CODESTYLE_BIN} --format --fix --config ${CONFIG_PATH} ${filePath}`,
-    {
-      cwd: ROOT_DIR,
-      encoding: "utf-8",
-      stdio: ["pipe", "pipe", "pipe"],
-    },
-  );
+  execSync(`${CODESTYLE_BIN} --format --fix --config ${CONFIG_PATH} ${filePath}`, {
+    cwd: ROOT_DIR,
+    encoding: "utf-8",
+    stdio: ["pipe", "pipe", "pipe"],
+  });
   return readFileSync(filePath, "utf-8");
 }
 
@@ -115,9 +109,7 @@ describe("formatter integration", () => {
     it("should use 4-space indentation", () => {
       const formatted = runFormat("unformatted.ts", tempDir);
       const lines = formatted.split("\n");
-      const indentedLine = lines.find(
-        (l) => l.startsWith("    ") && !l.startsWith("     "),
-      );
+      const indentedLine = lines.find((l) => l.startsWith("    ") && !l.startsWith("     "));
       expect(indentedLine).toBeTruthy();
     });
   });

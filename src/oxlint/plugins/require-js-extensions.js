@@ -5,8 +5,7 @@ const requireJsExtensionsRule = {
   meta: {
     type: "problem",
     docs: {
-      description:
-        "Require .js extension in imports for Node.js ESM compatibility",
+      description: "Require .js extension in imports for Node.js ESM compatibility",
       category: "Best Practices",
     },
     fixable: "code",

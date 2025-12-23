@@ -1,35 +1,35 @@
 name: Release
 
 on:
-    release:
-        types: [created]
+  release:
+    types: [created]
 
 permissions:
-    contents: read
-    id-token: write
+  contents: read
+  id-token: write
 
 jobs:
-    quality:
-        name: Quality
-        uses: ./.github/workflows/base-quality.yml
+  quality:
+    name: Quality
+    uses: ./.github/workflows/base-quality.yml
 
-    publish:
-        name: Publish
-        needs: quality
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/checkout@v4
-            - uses: actions/setup-node@v4
-              with:
-                  node-version: '22'
-                  cache: 'npm'
-                  cache-dependency-path: package-lock.json
-                  registry-url: 'https://registry.npmjs.org'
-            - name: Install dependencies
-              run: npm ci
-            - name: Build package
-              run: npm run build
-            - name: Publish to npm
-              run: npm publish --access public
-              env:
-                  NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}
+  publish:
+    name: Publish
+    needs: quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+          cache-dependency-path: package-lock.json
+          registry-url: "https://registry.npmjs.org"
+      - name: Install dependencies
+        run: npm ci
+      - name: Build package
+        run: npm run build
+      - name: Publish to npm
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}

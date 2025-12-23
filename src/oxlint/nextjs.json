@@ -1,10 +1,10 @@
 {
-    "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
-    "extends": ["./base.json"],
-    "plugins": ["typescript", "import", "react", "nextjs"],
-    "jsPlugins": ["./plugins/remove-ts-extensions.js"],
-    "ignorePatterns": ["dist/**", "node_modules/**", ".next/**", "next-env.d.ts"],
-    "rules": {
-        "remove-ts-extensions/remove-ts-extensions": "error"
-    }
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "extends": ["./base.json"],
+  "plugins": ["typescript", "import", "react", "nextjs"],
+  "jsPlugins": ["./plugins/remove-ts-extensions.js"],
+  "ignorePatterns": ["dist/**", "node_modules/**", ".next/**", "next-env.d.ts"],
+  "rules": {
+    "remove-ts-extensions/remove-ts-extensions": "error"
+  }
 }
