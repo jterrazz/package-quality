@@ -1,58 +1,69 @@
 {
-    "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
-    "plugins": ["typescript", "import"],
-    "jsPlugins": ["eslint-plugin-perfectionist"],
-    "categories": {
-        "correctness": "error",
-        "suspicious": "warn",
-        "pedantic": "off",
-        "style": "off",
-        "nursery": "off"
-    },
-    "rules": {
-        "no-unused-vars": "error",
-        "typescript/consistent-type-imports": [
-            "error",
-            {
-                "disallowTypeAnnotations": true,
-                "fixStyle": "inline-type-imports",
-                "prefer": "type-imports"
-            }
-        ],
-        "typescript/no-unused-expressions": [
-            "error",
-            {
-                "allowShortCircuit": true,
-                "allowTernary": true,
-                "allowTaggedTemplates": true
-            }
-        ],
-        "perfectionist/sort-array-includes": ["error", { "type": "natural" }],
-        "perfectionist/sort-classes": ["error", { "type": "natural" }],
-        "perfectionist/sort-heritage-clauses": ["error", { "type": "natural" }],
-        "perfectionist/sort-intersection-types": ["error", { "type": "natural" }],
-        "perfectionist/sort-jsx-props": ["error", { "type": "natural" }],
-        "perfectionist/sort-named-exports": ["error", { "type": "natural" }],
-        "perfectionist/sort-named-imports": ["error", { "type": "natural" }],
-        "perfectionist/sort-switch-case": ["error", { "type": "natural" }],
-        "perfectionist/sort-union-types": ["error", { "type": "natural" }],
-        "perfectionist/sort-variable-declarations": ["error", { "type": "natural" }],
-        "perfectionist/sort-imports": [
-            "error",
-            {
-                "type": "alphabetical",
-                "order": "asc",
-                "ignoreCase": true,
-                "newlinesBetween": "always",
-                "groups": [
-                    ["builtin", "external"],
-                    "internal",
-                    ["parent", "sibling", "index"],
-                    "style",
-                    "unknown"
-                ]
-            }
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "import", "oxc"],
+  "jsPlugins": ["eslint-plugin-perfectionist"],
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn",
+    "perf": "warn",
+    "pedantic": "off",
+    "style": "warn",
+    "nursery": "off"
+  },
+  "rules": {
+    "no-unused-vars": "error",
+    "sort-keys": "off",
+    "sort-imports": "off",
+    "func-style": "off",
+    "no-magic-numbers": "off",
+    "import/no-named-export": "off",
+    "import/no-anonymous-default-export": "off",
+    "import/group-exports": "off",
+    "typescript/consistent-type-imports": [
+      "error",
+      {
+        "disallowTypeAnnotations": true,
+        "fixStyle": "inline-type-imports",
+        "prefer": "type-imports"
+      }
+    ],
+    "typescript/no-unused-expressions": [
+      "error",
+      {
+        "allowShortCircuit": true,
+        "allowTernary": true,
+        "allowTaggedTemplates": true
+      }
+    ],
+    "perfectionist/sort-array-includes": ["error", { "type": "natural" }],
+    "perfectionist/sort-classes": ["error", { "type": "natural" }],
+    "perfectionist/sort-heritage-clauses": ["error", { "type": "natural" }],
+    "perfectionist/sort-intersection-types": ["error", { "type": "natural" }],
+    "perfectionist/sort-jsx-props": ["error", { "type": "natural" }],
+    "perfectionist/sort-named-exports": ["error", { "type": "natural" }],
+    "perfectionist/sort-named-imports": ["error", { "type": "natural" }],
+    "perfectionist/sort-switch-case": ["error", { "type": "natural" }],
+    "perfectionist/sort-union-types": ["error", { "type": "natural" }],
+    "perfectionist/sort-variable-declarations": [
+      "error",
+      { "type": "natural" }
+    ],
+    "perfectionist/sort-imports": [
+      "error",
+      {
+        "type": "alphabetical",
+        "order": "asc",
+        "ignoreCase": true,
+        "newlinesBetween": "always",
+        "groups": [
+          ["builtin", "external"],
+          "internal",
+          ["parent", "sibling", "index"],
+          "style",
+          "unknown"
         ]
-    },
-    "ignorePatterns": ["dist/**", "node_modules/**"]
+      }
+    ]
+  },
+  "ignorePatterns": ["dist/**", "node_modules/**"]
 }

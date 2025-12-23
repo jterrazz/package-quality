@@ -1,10 +1,9 @@
 {
-  "name": "@jterrazz/quality",
-  "version": "6.0.0",
+  "name": "@jterrazz/codestyle",
+  "version": "1.0.0",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
   "bin": {
-    "ts-check": "./src/ts-check.sh",
-    "ts-fix": "./src/ts-fix.sh"
+    "codestyle": "./src/codestyle.sh"
   },
   "files": [
     "src"
@@ -31,10 +30,10 @@
     "build": "# no build script"
   },
   "dependencies": {
+    "@typescript/native-preview": "^7.0.0-dev",
     "eslint-plugin-perfectionist": "^4.15.1",
     "oxfmt": "^0.19.0",
-    "oxlint": "^1.35.0",
-    "typescript": "^5.9.3"
+    "oxlint": "^1.35.0"
   },
   "devDependencies": {
     "vitest": "^3.2.4"
