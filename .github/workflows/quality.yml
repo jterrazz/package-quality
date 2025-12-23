@@ -1,15 +1,15 @@
 name: Quality
 
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
 
 permissions:
-  contents: read
+    contents: read
 
 jobs:
-  quality:
-    name: Quality
-    uses: ./.github/workflows/base-quality.yml
+    quality:
+        name: Quality
+        uses: ./.github/workflows/base-quality.yml

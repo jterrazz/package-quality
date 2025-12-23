@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
+  "extends": ["./base.json"],
+  "plugins": ["typescript", "import", "react"],
+  "jsPlugins": ["./plugins/remove-ts-extensions.js"],
+  "rules": {
+    "typescript/no-require-imports": [
+      "error",
+      {
+        "allow": ["\\.png$", "\\.jpg$", "\\.jpeg$", "\\.gif$", "\\.webp$"]
+      }
+    ],
+    "remove-ts-extensions/remove-ts-extensions": "error"
+  }
+}

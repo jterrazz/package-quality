@@ -1,8 +1,7 @@
 {
   "name": "@jterrazz/quality",
+  "version": "6.0.0",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
-  "version": "5.0.1",
-  "main": "src/index.js",
   "bin": {
     "ts-check": "./src/ts-check.sh",
     "ts-fix": "./src/ts-fix.sh"
@@ -10,27 +9,35 @@
   "files": [
     "src"
   ],
+  "type": "module",
+  "main": "src/index.js",
   "exports": {
     ".": "./src/index.js",
-    "./biome": "./src/biome/index.json"
+    "./oxlint/node": "./src/oxlint/node.json",
+    "./oxlint/expo": "./src/oxlint/expo.json",
+    "./oxlint/nextjs": "./src/oxlint/nextjs.json",
+    "./oxfmt": "./src/oxfmt/index.json"
   },
-  "type": "module",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "scripts": {
-    "lint": "biome check",
-    "lint:fix": "biome check --write",
-    "test": "# no test script",
+    "lint": "oxlint -c src/oxlint/node.json",
+    "lint:fix": "oxlint -c src/oxlint/node.json --fix",
+    "format": "oxfmt --config src/oxfmt/index.json .",
+    "format:check": "oxfmt --config src/oxfmt/index.json --check .",
+    "test": "vitest --run",
+    "test:watch": "vitest",
     "build": "# no build script"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.3.8",
-    "@eslint/js": "^9.39.1",
-    "eslint": "9.39.1",
-    "eslint-plugin-file-extension-in-import-ts": "^2.1.1",
     "eslint-plugin-perfectionist": "^4.15.1",
-    "eslint-plugin-unused-imports": "^4.3.0",
-    "globals": "^16.5.0",
-    "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.1"
+    "oxfmt": "^0.19.0",
+    "oxlint": "^1.35.0",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
   },
   "peerDependencies": {
     "@types/node": "*"
@@ -39,8 +46,5 @@
     "@types/node": {
       "optional": true
     }
-  },
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
   }
 }

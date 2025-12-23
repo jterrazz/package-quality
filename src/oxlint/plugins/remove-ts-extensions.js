@@ -1,5 +1,16 @@
-// Custom rule to remove TS/JS extensions
+// Custom rule to remove TS/JS extensions from imports
+// Compatible with both ESLint and Oxlint JS plugin API
+
 const removeTsExtensionsRule = {
+    meta: {
+        type: 'problem',
+        docs: {
+            description: 'Remove .js, .jsx, .ts, .tsx extensions from imports',
+            category: 'Best Practices',
+        },
+        fixable: 'code',
+        schema: [],
+    },
     create(context) {
         const extensionsToRemove = /\.(js|jsx|ts|tsx)$/;
 
@@ -13,45 +24,30 @@ const removeTsExtensionsRule = {
 
             if (extensionsToRemove.test(importPath)) {
                 context.report({
+                    node: node.source,
+                    message: `Remove "${importPath.match(extensionsToRemove)[0]}" extension from import`,
                     fix(fixer) {
                         const newPath = importPath.replace(extensionsToRemove, '');
                         return fixer.replaceText(node.source, `'${newPath}'`);
                     },
-                    message: `Remove "${importPath.match(extensionsToRemove)[0]}" extension from import`,
-                    node: node.source,
                 });
             }
         }
 
         return {
-            ExportAllDeclaration: checkNode,
-            ExportNamedDeclaration: checkNode,
             ImportDeclaration: checkNode,
+            ExportNamedDeclaration: checkNode,
+            ExportAllDeclaration: checkNode,
         };
-    },
-    meta: {
-        docs: {
-            category: 'Best Practices',
-            description: 'Remove .js, .jsx, .ts, .tsx extensions from imports',
-        },
-        fixable: 'code',
-        schema: [],
-        type: 'problem',
     },
 };
 
-export default [
-    {
-        plugins: {
-            custom: {
-                rules: {
-                    'remove-ts-extensions': removeTsExtensionsRule,
-                },
-            },
-        },
-        rules: {
-            // Use our custom rule to remove TS/JS extensions
-            'custom/remove-ts-extensions': 'error',
-        },
+export default {
+    meta: {
+        name: 'remove-ts-extensions',
+        version: '1.0.0',
     },
-];
+    rules: {
+        'remove-ts-extensions': removeTsExtensionsRule,
+    },
+};
