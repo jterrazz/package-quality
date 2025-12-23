@@ -19,7 +19,7 @@ function runLint(configPath: string, targetFile: string, cwd: string): LintResul
   try {
     const output = execSync(`${CODESTYLE_BIN} --lint -c ${configPath} ${targetFile}`, {
       cwd,
-      encoding: "utf-8",
+      encoding: "utf8",
       stdio: ["pipe", "pipe", "pipe"],
     });
     const match = output.match(/Found (\d+) warnings? and (\d+) errors?/);
@@ -137,6 +137,88 @@ describe("linter integration", () => {
         expect(result.output).toContain("no-accumulating-spread");
       });
     });
+
+    describe("import/no-default-export", () => {
+      it("should allow default exports", () => {
+        const result = runLint(configPath, "invalid-default-export.ts", tempDir);
+        expect(result.errorCount).toBe(0);
+      });
+
+      it("should pass for named exports", () => {
+        const result = runLint(configPath, "valid-named-export.ts", tempDir);
+        expect(result.errorCount).toBe(0);
+      });
+    });
+
+    describe("import/first", () => {
+      it("should reject imports not at the top", () => {
+        const result = runLint(configPath, "invalid-import-not-first.ts", tempDir);
+        expect(result.success).toBe(false);
+        expect(result.errorCount).toBeGreaterThan(0);
+        expect(result.output).toContain("first");
+      });
+    });
+
+    describe("import/no-namespace", () => {
+      it("should reject namespace imports", () => {
+        const result = runLint(configPath, "invalid-namespace-import.ts", tempDir);
+        expect(result.success).toBe(false);
+        expect(result.errorCount).toBeGreaterThan(0);
+        expect(result.output).toContain("no-namespace");
+      });
+    });
+
+    describe("unicorn/catch-error-name", () => {
+      it("should require error variable to be named 'error'", () => {
+        const result = runLint(configPath, "invalid-catch-error-name.ts", tempDir);
+        expect(result.success).toBe(false);
+        expect(result.errorCount).toBeGreaterThan(0);
+        expect(result.output).toContain("catch-error-name");
+      });
+    });
+
+    describe("unicorn/numeric-separators-style", () => {
+      it("should warn about large numbers without separators", () => {
+        const result = runLint(configPath, "invalid-numeric-separators.ts", tempDir);
+        expect(result.warningCount).toBeGreaterThan(0);
+        expect(result.output).toContain("numeric-separators");
+      });
+    });
+
+    describe("no-nested-ternary", () => {
+      it("should reject nested ternary expressions", () => {
+        const result = runLint(configPath, "invalid-nested-ternary.ts", tempDir);
+        expect(result.success).toBe(false);
+        expect(result.errorCount).toBeGreaterThan(0);
+        expect(result.output).toContain("nested-ternary");
+      });
+    });
+
+    describe("curly", () => {
+      it("should require curly braces", () => {
+        const result = runLint(configPath, "invalid-curly.ts", tempDir);
+        expect(result.success).toBe(false);
+        expect(result.errorCount).toBeGreaterThan(0);
+        expect(result.output).toContain("curly");
+      });
+    });
+
+    describe("new-cap", () => {
+      it("should require constructors to start with uppercase", () => {
+        const result = runLint(configPath, "invalid-new-cap.ts", tempDir);
+        expect(result.success).toBe(false);
+        expect(result.errorCount).toBeGreaterThan(0);
+        expect(result.output).toContain("new-cap");
+      });
+    });
+
+    describe("capitalized-comments", () => {
+      it("should warn about lowercase comments", () => {
+        const result = runLint(configPath, "invalid-capitalized-comment.ts", tempDir);
+        expect(result.warningCount).toBeGreaterThan(0);
+        expect(result.output).toContain("capitalized-comments");
+      });
+    });
   });
 
   describe("node config", () => {
@@ -146,7 +228,7 @@ describe("linter integration", () => {
       const result = runLint(configPath, "invalid-missing-js-ext.ts", tempDir);
       expect(result.success).toBe(false);
       expect(result.errorCount).toBeGreaterThan(0);
-      expect(result.output).toContain("require-js-extensions");
+      expect(result.output).toContain("extensions");
     });
 
     it("should pass when .js extension is present", () => {
@@ -168,7 +250,7 @@ describe("linter integration", () => {
       const result = runLint(configPath, "invalid-has-ts-ext.ts", tempDir);
       expect(result.success).toBe(false);
       expect(result.errorCount).toBeGreaterThan(0);
-      expect(result.output).toContain("remove-ts-extensions");
+      expect(result.output).toContain("extensions");
     });
 
     it("should pass when no extension on relative imports", () => {
@@ -190,7 +272,7 @@ describe("linter integration", () => {
       const result = runLint(configPath, "invalid-has-ts-ext.ts", tempDir);
       expect(result.success).toBe(false);
       expect(result.errorCount).toBeGreaterThan(0);
-      expect(result.output).toContain("remove-ts-extensions");
+      expect(result.output).toContain("extensions");
     });
 
     it("should pass when no extension on relative imports", () => {

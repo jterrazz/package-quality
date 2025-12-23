@@ -63,25 +63,29 @@ type_pid=""
 code_pid=""
 style_pid=""
 
+# Find the node_modules/.bin directory relative to this script
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+BIN_DIR="$SCRIPT_DIR/../node_modules/.bin"
+
 if [ "$RUN_TYPE" = true ]; then
-    tsgo --noEmit "${EXTRA_ARGS[@]}" > "$tmp_dir/type.log" 2>&1 &
+    "$BIN_DIR/tsgo" --noEmit "${EXTRA_ARGS[@]}" > "$tmp_dir/type.log" 2>&1 &
     type_pid=$!
 fi
 
 if [ "$RUN_LINT" = true ]; then
     if [ "$FIX_MODE" = true ]; then
-        oxlint --fix "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
+        "$BIN_DIR/oxlint" --fix "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
     else
-        oxlint "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
+        "$BIN_DIR/oxlint" "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
     fi
     code_pid=$!
 fi
 
 if [ "$RUN_FORMAT" = true ]; then
     if [ "$FIX_MODE" = true ]; then
-        oxfmt "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/style.log" 2>&1 &
+        "$BIN_DIR/oxfmt" "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/style.log" 2>&1 &
     else
-        oxfmt --check "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/style.log" 2>&1 &
+        "$BIN_DIR/oxfmt" --check "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/style.log" 2>&1 &
     fi
     style_pid=$!
 fi

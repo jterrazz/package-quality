@@ -1,6 +1,6 @@
 {
   "name": "@jterrazz/codestyle",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
   "bin": {
     "codestyle": "./src/codestyle.sh"
@@ -15,16 +15,15 @@
     "./oxlint/node": "./src/oxlint/node.json",
     "./oxlint/expo": "./src/oxlint/expo.json",
     "./oxlint/nextjs": "./src/oxlint/nextjs.json",
+    "./oxlint/architectures/hexagonal": "./src/oxlint/architectures/hexagonal.json",
     "./oxfmt": "./src/oxfmt/index.json"
   },
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "lint": "oxlint --ignore-pattern '**/fixtures/**'",
-    "lint:fix": "oxlint --fix --ignore-pattern '**/fixtures/**'",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
+    "lint": "oxlint --ignore-pattern '**/fixtures/**' && oxfmt --check",
+    "lint:fix": "oxlint --fix --ignore-pattern '**/fixtures/**' && oxfmt",
     "test": "vitest --run",
     "test:watch": "vitest",
     "build": "# no build script"

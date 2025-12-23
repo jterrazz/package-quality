@@ -18,7 +18,7 @@ function runTypeCheck(cwd: string): TypeCheckResult {
   try {
     const output = execSync(`${CODESTYLE_BIN} --type`, {
       cwd,
-      encoding: "utf-8",
+      encoding: "utf8",
       stdio: ["pipe", "pipe", "pipe"],
     });
     return {
@@ -38,7 +38,7 @@ function runTypeCheck(cwd: string): TypeCheckResult {
 }
 
 function copyFixture(fixtureName: string, destDir: string): void {
-  const content = require("fs").readFileSync(resolve(FIXTURES_DIR, fixtureName), "utf-8");
+  const content = require("fs").readFileSync(resolve(FIXTURES_DIR, fixtureName), "utf8");
   writeFileSync(resolve(destDir, fixtureName), content);
 }
 

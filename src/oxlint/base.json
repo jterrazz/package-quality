@@ -1,29 +1,23 @@
 {
   "$schema": "https://raw.githubusercontent.com/oxc-project/oxc/main/npm/oxlint/configuration_schema.json",
-  "plugins": ["typescript", "import", "oxc"],
+  "plugins": ["typescript", "import", "oxc", "unicorn"],
   "jsPlugins": ["eslint-plugin-perfectionist"],
   "categories": {
     "correctness": "error",
-    "suspicious": "warn",
+    "suspicious": "error",
     "perf": "warn",
     "pedantic": "off",
     "style": "warn",
     "nursery": "off"
   },
   "rules": {
+    // ============================================
+    // ENABLED RULES
+    // ============================================
+
     "no-unused-vars": "error",
-    "sort-keys": "off",
-    "sort-imports": "off",
-    "func-style": "off",
-    "no-magic-numbers": "off",
-    "import/no-named-export": "off",
-    "import/no-anonymous-default-export": "off",
-    "import/group-exports": "off",
-    "no-ternary": "off",
-    "init-declarations": "off",
-    "capitalized-comments": "off",
-    "id-length": "off",
-    "typescript/consistent-type-definitions": "off",
+
+    // -- TypeScript --
     "typescript/consistent-type-imports": [
       "error",
       {
@@ -40,19 +34,14 @@
         "allowTaggedTemplates": true
       }
     ],
-    "perfectionist/sort-array-includes": ["error", { "type": "natural" }],
-    "perfectionist/sort-classes": ["error", { "type": "natural" }],
+
+    // -- Perfectionist (sorting/ordering) --
     "perfectionist/sort-heritage-clauses": ["error", { "type": "natural" }],
     "perfectionist/sort-intersection-types": ["error", { "type": "natural" }],
     "perfectionist/sort-jsx-props": ["error", { "type": "natural" }],
     "perfectionist/sort-named-exports": ["error", { "type": "natural" }],
     "perfectionist/sort-named-imports": ["error", { "type": "natural" }],
-    "perfectionist/sort-switch-case": ["error", { "type": "natural" }],
     "perfectionist/sort-union-types": ["error", { "type": "natural" }],
-    "perfectionist/sort-variable-declarations": [
-      "error",
-      { "type": "natural" }
-    ],
     "perfectionist/sort-imports": [
       "error",
       {
@@ -68,7 +57,62 @@
           "unknown"
         ]
       }
-    ]
+    ],
+
+    // ============================================
+    // DISABLED - Conflicts with perfectionist
+    // ============================================
+
+    "sort-keys": "off",
+    "sort-imports": "off",
+
+    // ============================================
+    // DISABLED - Too strict / opinionated
+    // ============================================
+
+    "func-style": "off",
+    "no-magic-numbers": "off",
+    "no-ternary": "off",
+    "init-declarations": "off",
+    "id-length": "off",
+    "max-statements": "off",
+    "max-params": "off",
+    "no-continue": "off",
+    "arrow-body-style": "off",
+    "prefer-destructuring": "off",
+    "typescript/consistent-type-definitions": "off",
+    "typescript/array-type": "off",
+    "unicorn/no-null": "off",
+    "unicorn/no-array-sort": "off",
+
+    // ============================================
+    // ENABLED - Code style enforcement
+    // ============================================
+
+    "capitalized-comments": "warn",
+    "new-cap": "error",
+    "curly": "error",
+    "no-nested-ternary": "error",
+    "unicorn/catch-error-name": "error",
+    "unicorn/numeric-separators-style": "warn",
+
+    // ============================================
+    // DISABLED - Conflicts with other rules
+    // ============================================
+
+    "import/no-named-export": "off",
+    "import/consistent-type-specifier-style": "off",
+    "import/prefer-default-export": "off",
+    "import/no-default-export": "off",
+    "import/group-exports": "off",
+    "import/no-anonymous-default-export": "off",
+
+    // ============================================
+    // ENABLED - Clean imports
+    // ============================================
+
+    "import/first": "error",
+    "import/no-namespace": "error"
   },
   "ignorePatterns": ["dist/**", "node_modules/**"]
 }

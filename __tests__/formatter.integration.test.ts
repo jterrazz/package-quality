@@ -20,7 +20,7 @@ function runFormatCheck(targetFile: string, targetDir: string): FormatResult {
     const filePath = resolve(targetDir, targetFile);
     const output = execSync(`${CODESTYLE_BIN} --format --config ${CONFIG_PATH} ${filePath}`, {
       cwd: ROOT_DIR,
-      encoding: "utf-8",
+      encoding: "utf8",
       stdio: ["pipe", "pipe", "pipe"],
     });
     return {
@@ -42,10 +42,10 @@ function runFormat(targetFile: string, targetDir: string): string {
   const filePath = resolve(targetDir, targetFile);
   execSync(`${CODESTYLE_BIN} --format --fix --config ${CONFIG_PATH} ${filePath}`, {
     cwd: ROOT_DIR,
-    encoding: "utf-8",
+    encoding: "utf8",
     stdio: ["pipe", "pipe", "pipe"],
   });
-  return readFileSync(filePath, "utf-8");
+  return readFileSync(filePath, "utf8");
 }
 
 describe("formatter integration", () => {
@@ -79,16 +79,16 @@ describe("formatter integration", () => {
       const formatted = runFormat("unformatted.ts", tempDir);
 
       // Check formatting rules applied
-      expect(formatted).toContain("import fs from 'fs';"); // single quotes, semicolons
-      expect(formatted).toContain("function greet(name: string): string"); // proper spacing
-      expect(formatted).not.toMatch(/^\s{2}const/m); // should use 4 spaces (tabWidth: 4)
+      expect(formatted).toContain("import fs from 'fs';"); // Single quotes, semicolons
+      expect(formatted).toContain("function greet(name: string): string"); // Proper spacing
+      expect(formatted).not.toMatch(/^\s{2}const/m); // Should use 4 spaces (tabWidth: 4)
       expect(formatted).toMatch(/^\s{4}const/m); // 4-space indentation
     });
 
     it("should be idempotent (formatting twice gives same result)", () => {
-      const before = readFileSync(resolve(tempDir, "formatted.ts"), "utf-8");
+      const before = readFileSync(resolve(tempDir, "formatted.ts"), "utf8");
       runFormat("formatted.ts", tempDir);
-      const after = readFileSync(resolve(tempDir, "formatted.ts"), "utf-8");
+      const after = readFileSync(resolve(tempDir, "formatted.ts"), "utf8");
 
       expect(after).toBe(before);
     });
@@ -103,7 +103,7 @@ describe("formatter integration", () => {
 
     it("should use semicolons", () => {
       const formatted = runFormat("unformatted.ts", tempDir);
-      expect(formatted).toMatch(/;\s*$/m); // lines end with semicolons
+      expect(formatted).toMatch(/;\s*$/m); // Lines end with semicolons
     });
 
     it("should use 4-space indentation", () => {
