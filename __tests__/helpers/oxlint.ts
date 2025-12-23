@@ -55,17 +55,7 @@ export function hasErrorOnFile(output: string, file: string, rule: string): bool
 export function expectError(output: string, file: string, rule: string): void {
   const has = hasErrorOnFile(output, file, rule);
   if (!has) {
-    // Include diagnostic info for debugging CI failures
-    const hasRule = output.includes(rule);
-    const hasFile = output.includes(file);
-    const outputPreview = output.length > 500 ? output.substring(0, 500) + "..." : output;
-    throw new Error(
-      `Expected rule "${rule}" to trigger on "${file}"\n` +
-        `  Output contains rule "${rule}": ${hasRule}\n` +
-        `  Output contains file "${file}": ${hasFile}\n` +
-        `  Output length: ${output.length}\n` +
-        `  Output preview: ${outputPreview}`,
-    );
+    throw new Error(`Expected rule "${rule}" to trigger on "${file}"`);
   }
 }
 
