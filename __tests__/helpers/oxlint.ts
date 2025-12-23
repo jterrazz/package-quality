@@ -20,21 +20,34 @@ export function runOxlint(configPath: string, cwd: string): LintResult {
     });
     return { success: true, output };
   } catch (error: any) {
-    const output = error.stdout?.toString() + error.stderr?.toString() || "";
+    const stdout = error.stdout || "";
+    const stderr = error.stderr || "";
+    const output = stdout + stderr;
     return { success: false, output };
   }
 }
 
 export function hasErrorOnFile(output: string, file: string, rule: string): boolean {
-  // Format: "rule(name): message" then ",-[filename:line:col]"
-  const regex = new RegExp(`${rule}[\\s\\S]*?\\[${file}:\\d+:\\d+\\]`, "m");
+  // Format: "plugin(rule): message" then ",-[filename:line:col]" or "╭─[filename:line:col]"
+  // The bracket style varies between TTY and non-TTY modes
+  const regex = new RegExp(`${rule}[\\s\\S]*?[\\[─]${file}:\\d+:\\d+\\]`, "m");
   return regex.test(output);
 }
 
 export function expectError(output: string, file: string, rule: string): void {
   const has = hasErrorOnFile(output, file, rule);
   if (!has) {
-    throw new Error(`Expected rule "${rule}" to trigger on "${file}"`);
+    // Include diagnostic info for debugging CI failures
+    const hasRule = output.includes(rule);
+    const hasFile = output.includes(file);
+    const outputPreview = output.length > 500 ? output.substring(0, 500) + "..." : output;
+    throw new Error(
+      `Expected rule "${rule}" to trigger on "${file}"\n` +
+        `  Output contains rule "${rule}": ${hasRule}\n` +
+        `  Output contains file "${file}": ${hasFile}\n` +
+        `  Output length: ${output.length}\n` +
+        `  Output preview: ${outputPreview}`,
+    );
   }
 }
 
