@@ -31,14 +31,20 @@ export function hasErrorOnFile(output: string, file: string, rule: string): bool
   // Format: "plugin(rule): message" then "╭─[filename:line:col]" or ",-[filename:line:col]"
   // TTY mode uses box-drawing chars (╭─[), non-TTY uses ASCII (,-[)
   // We need to find the file in an error block header, then verify the rule appears before it
+
+  // Strip ANSI escape codes for reliable matching
+  // eslint-disable-next-line no-control-regex
+  const ansiRegex = /\x1b\[[0-9;]*m/g;
+  const cleanOutput = output.replace(ansiRegex, "");
+
   const escapedFile = file.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
   // Find all occurrences of the file in error block headers
   const filePattern = new RegExp(`(?:╭─\\[|,─\\[|\\[)${escapedFile}:\\d+:\\d+\\]`, "g");
   let match;
-  while ((match = filePattern.exec(output)) !== null) {
+  while ((match = filePattern.exec(cleanOutput)) !== null) {
     // Look at the ~300 chars before this file reference for the rule
     const start = Math.max(0, match.index - 300);
-    const preceding = output.substring(start, match.index);
+    const preceding = cleanOutput.substring(start, match.index);
     if (preceding.includes(rule)) {
       return true;
     }
