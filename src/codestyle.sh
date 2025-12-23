@@ -65,7 +65,14 @@ style_pid=""
 
 # Find the node_modules/.bin directory relative to this script
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BIN_DIR="$SCRIPT_DIR/../node_modules/.bin"
+# Find bin directory: installed package or development
+if [ -x "$SCRIPT_DIR/../../.bin/oxlint" ]; then
+    BIN_DIR="$SCRIPT_DIR/../../.bin"
+elif [ -x "$SCRIPT_DIR/../node_modules/.bin/oxlint" ]; then
+    BIN_DIR="$SCRIPT_DIR/../node_modules/.bin"
+else
+    BIN_DIR="$(npm bin 2>/dev/null)"
+fi
 
 if [ "$RUN_TYPE" = true ]; then
     "$BIN_DIR/tsgo" --noEmit "${EXTRA_ARGS[@]}" > "$tmp_dir/type.log" 2>&1 &
