@@ -30,16 +30,20 @@ export function runOxlint(configPath: string, cwd: string): LintResult {
 export function hasErrorOnFile(output: string, file: string, rule: string): boolean {
   // Format: "plugin(rule): message" then "╭─[filename:line:col]" or ",-[filename:line:col]"
   // TTY mode uses box-drawing chars (╭─[), non-TTY uses ASCII (,-[)
-  // We need to find the rule followed by the file within a reasonable distance (same error block)
-  const escapedRule = rule.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
+  // We need to find the file in an error block header, then verify the rule appears before it
   const escapedFile = file.replace(/[.*+?^${}()|[\]\\]/g, String.raw`\$&`);
-  // Match rule, then within ~500 chars, find the file in brackets
-  // The file appears as ╭─[filename:line:col] or ,-[filename:line:col] or just [filename:line:col]
-  const regex = new RegExp(
-    `${escapedRule}[\\s\\S]{0,500}?(?:╭─\\[|,─\\[|\\[)${escapedFile}:\\d+:\\d+\\]`,
-    "m",
-  );
-  return regex.test(output);
+  // Find all occurrences of the file in error block headers
+  const filePattern = new RegExp(`(?:╭─\\[|,─\\[|\\[)${escapedFile}:\\d+:\\d+\\]`, "g");
+  let match;
+  while ((match = filePattern.exec(output)) !== null) {
+    // Look at the ~300 chars before this file reference for the rule
+    const start = Math.max(0, match.index - 300);
+    const preceding = output.substring(start, match.index);
+    if (preceding.includes(rule)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 export function expectError(output: string, file: string, rule: string): void {
