@@ -144,15 +144,43 @@ describe("linter integration", () => {
       });
     });
 
-    describe("new-cap", () => {
-      it("should require constructors to start with uppercase", () => {
-        expectError(baseResult.output, "invalid-new-cap.ts", "new-cap");
-      });
-    });
-
     describe("capitalized-comments", () => {
       it("should warn about lowercase comments", () => {
         expectError(baseResult.output, "invalid-capitalized-comment.ts", "capitalized-comments");
+      });
+    });
+
+    // ============================================
+    // DISABLED RULES - Should NOT trigger errors
+    // ============================================
+
+    describe("new-cap (disabled)", () => {
+      it("should allow lowercase constructor names", () => {
+        expectNoError(baseResult.output, "valid-new-cap.ts", "new-cap");
+      });
+    });
+
+    describe("import/no-unassigned-import (disabled)", () => {
+      it("should allow unassigned imports", () => {
+        expectNoError(baseResult.output, "valid-unassigned-import.ts", "no-unassigned-import");
+      });
+    });
+
+    describe("no-await-in-loop (disabled)", () => {
+      it("should allow await in loops", () => {
+        expectNoError(baseResult.output, "valid-await-in-loop.ts", "no-await-in-loop");
+      });
+    });
+
+    describe("import/no-named-default (disabled)", () => {
+      it("should allow named default imports", () => {
+        expectNoError(baseResult.output, "valid-named-default.ts", "no-named-default");
+      });
+    });
+
+    describe("typescript/no-inferrable-types (disabled)", () => {
+      it("should allow inferrable type annotations", () => {
+        expectNoError(baseResult.output, "valid-inferrable-types.ts", "no-inferrable-types");
       });
     });
   });

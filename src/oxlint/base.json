@@ -5,9 +5,9 @@
   "categories": {
     "correctness": "error",
     "suspicious": "error",
-    "perf": "warn",
+    "perf": "error",
     "pedantic": "off",
-    "style": "warn",
+    "style": "error",
     "nursery": "off"
   },
   "rules": {
@@ -80,21 +80,25 @@
     "no-continue": "off",
     "arrow-body-style": "off",
     "prefer-destructuring": "off",
+    "new-cap": "off",
+    "no-await-in-loop": "off",
     "typescript/consistent-type-definitions": "off",
     "typescript/array-type": "off",
+    "typescript/no-inferrable-types": "off",
     "unicorn/no-null": "off",
     "unicorn/no-array-sort": "off",
+    "import/no-unassigned-import": "off",
+    "import/no-named-default": "off",
 
     // ============================================
     // ENABLED - Code style enforcement
     // ============================================
 
-    "capitalized-comments": "warn",
-    "new-cap": "error",
+    "capitalized-comments": "error",
     "curly": "error",
     "no-nested-ternary": "error",
     "unicorn/catch-error-name": "error",
-    "unicorn/numeric-separators-style": "warn",
+    "unicorn/numeric-separators-style": "error",
 
     // ============================================
     // DISABLED - Conflicts with other rules
