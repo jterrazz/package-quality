@@ -25,11 +25,11 @@ npx codestyle --fix    # Fix everything
 
 ## Configurations
 
-| Config | Use Case |
-| ------ | -------- |
-| `node_modules/@jterrazz/codestyle/src/oxlint/node.json` | Node.js (requires .js extensions) |
-| `node_modules/@jterrazz/codestyle/src/oxlint/expo.json` | Expo / React Native |
-| `node_modules/@jterrazz/codestyle/src/oxlint/nextjs.json` | Next.js |
+| Config                                                                     | Use Case                           |
+| -------------------------------------------------------------------------- | ---------------------------------- |
+| `node_modules/@jterrazz/codestyle/src/oxlint/node.json`                    | Node.js (requires .js extensions)  |
+| `node_modules/@jterrazz/codestyle/src/oxlint/expo.json`                    | Expo / React Native                |
+| `node_modules/@jterrazz/codestyle/src/oxlint/nextjs.json`                  | Next.js                            |
 | `node_modules/@jterrazz/codestyle/src/oxlint/architectures/hexagonal.json` | Hexagonal architecture enforcement |
 
 ## What's Included
