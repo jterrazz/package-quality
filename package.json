@@ -1,6 +1,6 @@
 {
   "name": "@jterrazz/codestyle",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
   "bin": {
     "codestyle": "./src/codestyle.sh"
@@ -27,8 +27,7 @@
     "lint:fix": "oxlint --fix --ignore-pattern '**/fixtures/**' && oxfmt",
     "test": "vitest --run",
     "test:watch": "vitest",
-    "build": "# no build script",
-    "postinstall": "node src/postinstall.js"
+    "build": "# no build script"
   },
   "dependencies": {
     "@typescript/native-preview": "^7.0.0-dev",
