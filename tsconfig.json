@@ -1,0 +1,5 @@
+{
+  "extends": "@jterrazz/typescript/tsconfig/node",
+  "include": ["__tests__/**/*.ts"],
+  "exclude": ["__tests__/fixtures/**"]
+}

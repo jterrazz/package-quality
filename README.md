@@ -12,7 +12,7 @@ Create `.oxlintrc.json`:
 
 ```json
 {
-    "extends": ["node_modules/@jterrazz/codestyle/src/oxlint/node.json"]
+    "extends": ["@jterrazz/codestyle/oxlint/node"]
 }
 ```
 
@@ -25,12 +25,12 @@ npx codestyle --fix    # Fix everything
 
 ## Configurations
 
-| Config                                                                     | Use Case                           |
-| -------------------------------------------------------------------------- | ---------------------------------- |
-| `node_modules/@jterrazz/codestyle/src/oxlint/node.json`                    | Node.js (requires .js extensions)  |
-| `node_modules/@jterrazz/codestyle/src/oxlint/expo.json`                    | Expo / React Native                |
-| `node_modules/@jterrazz/codestyle/src/oxlint/nextjs.json`                  | Next.js                            |
-| `node_modules/@jterrazz/codestyle/src/oxlint/architectures/hexagonal.json` | Hexagonal architecture enforcement |
+| Config                                               | Use Case                           |
+| ---------------------------------------------------- | ---------------------------------- |
+| `@jterrazz/codestyle/oxlint/node`                    | Node.js (requires .js extensions)  |
+| `@jterrazz/codestyle/oxlint/expo`                    | Expo / React Native                |
+| `@jterrazz/codestyle/oxlint/nextjs`                  | Next.js                            |
+| `@jterrazz/codestyle/oxlint/architectures/hexagonal` | Hexagonal architecture enforcement |
 
 ## What's Included
 
@@ -59,8 +59,8 @@ Enforce hexagonal architecture boundaries:
 ```json
 {
     "extends": [
-        "node_modules/@jterrazz/codestyle/src/oxlint/node.json",
-        "node_modules/@jterrazz/codestyle/src/oxlint/architectures/hexagonal.json"
+        "@jterrazz/codestyle/oxlint/node",
+        "@jterrazz/codestyle/oxlint/architectures/hexagonal"
     ]
 }
 ```

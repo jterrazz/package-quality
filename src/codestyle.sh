@@ -14,26 +14,36 @@ RUN_LINT=false
 RUN_FORMAT=false
 RUN_ALL=true
 EXTRA_ARGS=()
+LINT_ARGS=()
 
-for arg in "$@"; do
-    case $arg in
+while [[ $# -gt 0 ]]; do
+    case $1 in
         --fix)
             FIX_MODE=true
+            shift
             ;;
         --type)
             RUN_TYPE=true
             RUN_ALL=false
+            shift
             ;;
         --lint)
             RUN_LINT=true
             RUN_ALL=false
+            shift
             ;;
         --format)
             RUN_FORMAT=true
             RUN_ALL=false
+            shift
+            ;;
+        --ignore-pattern)
+            LINT_ARGS+=("$1" "$2")
+            shift 2
             ;;
         *)
-            EXTRA_ARGS+=("$arg")
+            EXTRA_ARGS+=("$1")
+            shift
             ;;
     esac
 done
@@ -88,9 +98,9 @@ fi
 
 if [ "$RUN_LINT" = true ]; then
     if [ "$FIX_MODE" = true ]; then
-        "$BIN_DIR/oxlint" --fix "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
+        "$BIN_DIR/oxlint" --fix "${LINT_ARGS[@]}" "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
     else
-        "$BIN_DIR/oxlint" "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
+        "$BIN_DIR/oxlint" "${LINT_ARGS[@]}" "${EXTRA_ARGS[@]:-.}" > "$tmp_dir/code.log" 2>&1 &
     fi
     code_pid=$!
 fi

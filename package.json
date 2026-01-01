@@ -1,6 +1,6 @@
 {
   "name": "@jterrazz/codestyle",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "author": "Jean-Baptiste Terrazzoni <contact@jterrazz.com>",
   "bin": {
     "codestyle": "./src/codestyle.sh"
@@ -23,27 +23,19 @@
     "registry": "https://registry.npmjs.org/"
   },
   "scripts": {
-    "lint": "oxlint --ignore-pattern '**/fixtures/**' && oxfmt --check",
-    "lint:fix": "oxlint --fix --ignore-pattern '**/fixtures/**' && oxfmt",
-    "test": "vitest --run",
-    "test:watch": "vitest",
-    "build": "# no build script"
+    "build": "# no build script",
+    "lint": "./src/codestyle.sh --ignore-pattern '**/fixtures/**'",
+    "lint:fix": "./src/codestyle.sh --fix --ignore-pattern '**/fixtures/**'",
+    "test": "vitest --run"
   },
   "dependencies": {
-    "@typescript/native-preview": "^7.0.0-dev",
-    "eslint-plugin-perfectionist": "^4.15.1",
-    "oxfmt": "^0.19.0",
-    "oxlint": "^1.35.0"
+    "@jterrazz/typescript": "^4.2.1",
+    "eslint-plugin-perfectionist": "^5.2.0",
+    "oxfmt": "^0.21.0",
+    "oxlint": "^1.36.0"
   },
   "devDependencies": {
-    "vitest": "^3.2.4"
-  },
-  "peerDependencies": {
-    "@types/node": "*"
-  },
-  "peerDependenciesMeta": {
-    "@types/node": {
-      "optional": true
-    }
+    "@types/node": "^25.0.3",
+    "vitest": "^4.0.16"
   }
 }

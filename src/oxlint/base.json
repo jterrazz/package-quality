@@ -48,7 +48,7 @@
         "type": "alphabetical",
         "order": "asc",
         "ignoreCase": true,
-        "newlinesBetween": "always",
+        "newlinesBetween": 1,
         "groups": [
           ["builtin", "external"],
           "internal",
